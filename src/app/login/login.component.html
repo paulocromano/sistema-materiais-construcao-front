@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row text-center mt-4">
+        <div class="col-4">
+            <p class="h2">Login</p>
+
+            <div class="p-inputgroup mt-5">
+                <span class="p-inputgroup-addon"><i class="fas fa-user"></i></span>
+                <input type="email" [(ngModel)]="credenciais.email" pInputText placeholder="Email">         
+            </div>
+
+            <div class="p-inputgroup mt-3">
+                <span class="p-inputgroup-addon"><i class="fas fa-key"></i></span>
+                <input type="password" [(ngModel)]="credenciais.senha" pInputText placeholder="Senha">         
+            </div>
+
+            <button class="btn btn-success px-4 mt-4" (click)="login()">Entrar</button>
+        </div>
+
+        <div class="col-6">
+            <p class="h2">Cadastro</p>
+        </div>
+    </div>
+</div>
