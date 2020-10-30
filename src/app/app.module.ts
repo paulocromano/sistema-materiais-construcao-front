@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 import { LoginModule } from './login/login.module';
 import { AuthService } from './shared/service/auth.service';
+import { StorageService } from './shared/service/storage.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,11 @@ import { AuthService } from './shared/service/auth.service';
     AppRoutingModule,
     LoginModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    StorageService
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
