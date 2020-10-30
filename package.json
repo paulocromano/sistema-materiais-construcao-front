@@ -22,7 +22,6 @@
     "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
-    "ng2-toasty": "^4.0.3",
     "primeflex": "^2.0.0",
     "primeicons": "^4.0.0",
     "primeng": "^10.0.0",
