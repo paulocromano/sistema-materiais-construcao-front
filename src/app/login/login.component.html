@@ -1,5 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 150px;">
     <div class="row text-center mt-4">
+
+        <!-- Login -->
         <div class="col-4">
             <p class="h2">Login</p>
 
@@ -13,11 +15,46 @@
                 <input type="password" [(ngModel)]="credenciais.senha" pInputText placeholder="Senha">         
             </div>
 
-            <button class="btn btn-success px-4 mt-4" (click)="login()">Entrar</button>
+            <button class="btn btn-success px-4 mt-4" (click)="login()" [disabled]="processandoOperacao">Entrar</button>
         </div>
 
-        <div class="col-6">
+        <!-- Cadastro -->
+        <div class="col-6 ml-5" style="left: 130px;">
             <p class="h2">Cadastro</p>
+
+            <div class="row">
+                <div class="col-7">
+                    <div class="p-inputgroup mt-5">
+                        <span class="p-inputgroup-addon"><i class="fas fa-user"></i></span>
+                        <input type="text" [(ngModel)]="cadastro.nome" pInputText placeholder="Nome Completo">         
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="p-inputgroup mt-5">
+                        <span class="p-inputgroup-addon"><i class="fas fa-birthday-cake"></i></span>
+                        <input type="text" [(ngModel)]="cadastro.dataNascimento" pInputText placeholder="Data de Nascimento">         
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-7">
+                    <div class="p-inputgroup mt-3">
+                        <span class="p-inputgroup-addon"><i class="fas fa-envelope"></i></span>
+                        <input type="email" [(ngModel)]="cadastro.email" pInputText placeholder="Email">         
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="p-inputgroup mt-3">
+                        <span class="p-inputgroup-addon"><i class="fas fa-key"></i></span>
+                        <input type="password" [(ngModel)]="cadastro.senha" pInputText placeholder="Senha">         
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-success px-4 mt-4" (click)="cadastroUsuario()" [disabled]="processandoOperacao">Cadastrar</button>
         </div>
     </div>
 </div>
