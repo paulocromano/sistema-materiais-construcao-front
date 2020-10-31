@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastyModule } from './../shared/toasty/toasty.module';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     InputTextModule,
     TooltipModule,
     ProgressSpinnerModule,
+    DialogModule,
     ToastyModule
   ]
 })

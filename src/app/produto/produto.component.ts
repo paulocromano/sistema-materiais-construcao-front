@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastyComponent } from '../shared/toasty/toasty.component';
 import { Produto } from './shared/model/produto.model';
 import { ProdutoService } from './shared/service/produto.service';
+import { AtualizarProdutoFORM } from './shared/model/atualizar-produto.form';
 
 @Component({
   selector: 'app-produto',
@@ -17,8 +18,11 @@ export class ProdutoComponent implements OnInit {
 
   public pesquisa: string;
   public processandoOperacao: boolean = false;
+  public mostrarDialogAtualizacaoProduto: boolean = false;
 
   public produtos: Produto[];
+  public produtoParaAtualizar = new AtualizarProdutoFORM(new Produto);
+  public produtoSelecionado = new Produto();
 
 
   public tabViewItems = [
@@ -51,6 +55,33 @@ export class ProdutoComponent implements OnInit {
         },
         () => this.processandoOperacao = false
       )
+  }
+
+  public abrirDialogParaAtualizarProduto(produto: Produto): void {
+    this.mostrarDialogAtualizacaoProduto = true;
+    this.produtoSelecionado = produto;
+    this.produtoParaAtualizar = new AtualizarProdutoFORM(produto);
+  }
+
+  public atualizarProduto(): void {
+    this.processandoOperacao = true;
+
+    this.produtoService.atualizarProduto(this.produtoSelecionado.id, this.produtoParaAtualizar)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success('Produto atualizado com sucesso!');
+          this.mostrarDialogAtualizacaoProduto = false;
+          this.listarTodosProdutos();  
+        },
+        (error: HttpErrorResponse) => {
+          this.toasty.error(this.mensagemDoErro(error));
+        },
+        () => this.processandoOperacao
+      )
+  } 
+
+  public camposAtualizacaoProdutoEstaoValidos(): boolean {
+    return !(this.produtoParaAtualizar.preco && this.produtoParaAtualizar.estoque);
   }
 
   private mensagemDoErro(erro: HttpErrorResponse): string {

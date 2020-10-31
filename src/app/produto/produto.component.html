@@ -1,6 +1,8 @@
 <div class="container-border">
+
     <p-tabView [activeIndex]="0">
         <p-tabPanel [header]="'Em Estoque'">
+
             <div class="borda-table">
                 <p-table #table [rows]="10" [paginator]="true" [value]="produtos" [columns]="tabViewItems">
                     <ng-template pTemplate="caption">
@@ -29,7 +31,8 @@
                                 {{ produto[col.field] }}
 
                                 <div *ngIf="col.field == 'acoes'" style="display: inline;">
-                                    <button class="btn btn-warning btn-sm" pTooltip="Atualizar" tooltipPosition="bottom">
+                                    <button class="btn btn-warning btn-sm" pTooltip="Atualizar" tooltipPosition="bottom"
+                                        (click)="abrirDialogParaAtualizarProduto(produto)">
                                         <i class="fas fa-sync"></i>
                                     </button>
 
@@ -51,7 +54,7 @@
                             <td [attr.colspan]="cols.length" *ngIf="!this.processandoOperacao" class="text-center">
                                 Nenhum Produto encontrado!
                             </td>
-                            
+
                             <td class="text-center" [attr.colspan]="cols.length" *ngIf="this.processandoOperacao">
                                 <p-progressSpinner [strokeWidth]="3"></p-progressSpinner>
                             </td>
@@ -71,5 +74,50 @@
         </p-tabPanel>
     </p-tabView>
 </div>
+
+<!-- Dialog de Atualização do Produto -->
+<p-dialog [(visible)]="mostrarDialogAtualizacaoProduto" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '70vh'}">
+
+    <p-header>
+        Atualizar Produto
+    </p-header>
+
+    <div>
+        <div class="p-inputgroup" style="width: 130px;">
+            <span class="p-inputgroup-addon">ID</span>
+            <input [value]="produtoSelecionado.id" pInputText [disabled]="true">
+        </div>
+
+        <div class="p-inputgroup my-3">
+            <span class="p-inputgroup-addon">Descrição</span>
+            <input [value]="produtoSelecionado.descricao" pInputText [disabled]="true">
+        </div>
+
+        <div class="row">
+            <div class="p-inputgroup col-7">
+                <span class="p-inputgroup-addon">Preço R$</span>
+                <input [(ngModel)]="produtoParaAtualizar.preco" type="number" min="0" pInputText>
+            </div>
+    
+            <div class="p-inputgroup col-5">
+                <span class="p-inputgroup-addon">Estoque</span>
+                <input [(ngModel)]="produtoParaAtualizar.estoque" type="number" min="0" pInputText>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogAtualizacaoProduto = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+
+        <button class="btn btn-success" (click)="atualizarProduto()" [disabled]="camposAtualizacaoProdutoEstaoValidos() || processandoOperacao">
+            <i class="fas fa-check-circle"></i>
+            Cadastrar
+        </button>
+    </p-footer>
+</p-dialog>
 
 <app-toasty #toastyComponent></app-toasty>

@@ -31,8 +31,6 @@ export class AuthService {
 
         let user = new LocalUser(token);
         this.usuarioAutenticado = this.storageService.setLocalUser(user);
-
-        console.log(this.usuarioAutenticado)
     }
 
     public logout(): void {
