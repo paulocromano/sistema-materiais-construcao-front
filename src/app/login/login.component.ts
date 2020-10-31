@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { CredenciaisDTO } from './shared/model/credenciaisDTO';
 import { AuthService } from './../shared/service/auth.service';
 import { ToastyComponent } from './../shared/toasty/toasty.component';
 import { CadastroService } from './shared/service/cadastro.service';
 import { CadastroFORM } from './shared/model/cadastroFORM.model';
+
 
 @Component({
   selector: 'app-login',
@@ -24,11 +26,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private cadastroService: CadastroService
+    private cadastroService: CadastroService,
+    private router: Router
     ) { }
 
-  ngOnInit(): void { 
-  }
+  ngOnInit(): void { }
 
   public login(): void {    
     this.processandoOperacao = true;
@@ -36,7 +38,9 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(this.credenciais)
       .subscribe((response: any) => {
         this.authService.successfullLogin(response.headers.get('Authorization'));
+
         this.toasty.success('Login efetuado com Sucesso!');
+        this.router.navigate(['/produto'])
         this.processandoOperacao = false;
       },
       (error: HttpErrorResponse) => {

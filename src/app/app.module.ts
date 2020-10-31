@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { AuthService } from './shared/service/auth.service';
 import { StorageService } from './shared/service/storage.service';
+import { ErrorInterceptorProvider } from './interceptor/error-interceptor';
+import { ProdutoModule } from './produto/produto.module';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -19,11 +22,14 @@ import { StorageService } from './shared/service/storage.service';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    LoginModule
+    LoginModule,
+    ProdutoModule
   ],
   providers: [
     AuthService,
+    AuthGuard,
     StorageService,
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

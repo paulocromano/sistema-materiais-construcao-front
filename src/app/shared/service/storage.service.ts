@@ -16,12 +16,13 @@ export class StorageService {
         return JSON.parse(user);
     }
 
-    public setLocalUser(localUser: LocalUser): void {
+    public setLocalUser(localUser: LocalUser): boolean {
         if (!localUser) {
             localStorage.removeItem(STORAGE_KEYS.localUser);
+            return false;
         }
-        else {
-            localStorage.setItem(STORAGE_KEYS.localUser, JSON.stringify(localUser));
-        }
+        
+        localStorage.setItem(STORAGE_KEYS.localUser, JSON.stringify(localUser));
+        return true;
     }
 }

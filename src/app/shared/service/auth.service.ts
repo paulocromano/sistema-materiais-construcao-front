@@ -10,6 +10,8 @@ import { StorageService } from './storage.service';
 @Injectable()
 export class AuthService {
 
+    private usuarioAutenticado: boolean = false;
+
     constructor(
         private http: HttpClient,
         private storageService: StorageService
@@ -28,10 +30,16 @@ export class AuthService {
         let token = authorizationValue.substring(7);
 
         let user = new LocalUser(token);
-        this.storageService.setLocalUser(user);
+        this.usuarioAutenticado = this.storageService.setLocalUser(user);
+
+        console.log(this.usuarioAutenticado)
     }
 
     public logout(): void {
         this.storageService.setLocalUser(null);
+    }
+
+    public usuarioEstaLogado(): boolean {
+        return this.usuarioAutenticado;
     }
 }
