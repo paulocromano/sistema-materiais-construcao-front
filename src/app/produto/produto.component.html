@@ -11,6 +11,7 @@
                         </div>
                     </ng-template>
 
+                    <!-- Headers da Tabela -->
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th *ngFor="let col of columns" [ngClass]="col.style" [pSortableColumn]="col.field" class="px-0 px-1 text-center">
@@ -21,16 +22,45 @@
                         </tr>
                     </ng-template>
 
+                    <!-- Body da Tabela -->
                     <ng-template pTemplate="body" let-produto let-columns="columns">
                         <tr>
                             <td *ngFor="let col of columns" class="text-center">
                                 {{ produto[col.field] }}
 
                                 <div *ngIf="col.field == 'acoes'" style="display: inline;">
-                                    
+                                    <button class="btn btn-warning btn-sm" pTooltip="Atualizar" tooltipPosition="bottom">
+                                        <i class="fas fa-sync"></i>
+                                    </button>
+
+                                    <button class="btn btn-primary btn-sm mx-2" pTooltip="Comprar" tooltipPosition="bottom">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm" pTooltip="Remover" tooltipPosition="bottom">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
+                    </ng-template>
+
+                    <!-- Caso não haja Produtos -->
+                    <ng-template pTemplate="emptymessage" let-cols>
+                        <tr>
+                            <td [attr.colspan]="cols.length" *ngIf="!this.processandoOperacao" class="text-center">
+                                Nenhum Produto encontrado!
+                            </td>
+                            
+                            <td class="text-center" [attr.colspan]="cols.length" *ngIf="this.processandoOperacao">
+                                <p-progressSpinner [strokeWidth]="3"></p-progressSpinner>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Parte inferior da tabela -->
+                    <ng-template pTemplate="summary">
+                        <div class="text-center">Produtos em Estoque: {{ (produtos) ? produtos.length : 0 }}</div>
                     </ng-template>
                 </p-table>
             </div>

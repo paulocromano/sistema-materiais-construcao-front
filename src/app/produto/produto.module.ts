@@ -7,6 +7,8 @@ import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastyModule } from './../shared/toasty/toasty.module';
+import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ToastyModule } from './../shared/toasty/toasty.module';
     TableModule,
     FormsModule,
     InputTextModule,
+    TooltipModule,
+    ProgressSpinnerModule,
     ToastyModule
   ]
 })

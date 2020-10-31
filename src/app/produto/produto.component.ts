@@ -24,7 +24,7 @@ export class ProdutoComponent implements OnInit {
   public tabViewItems = [
     { header: 'ID', field: 'id', style: 'col-id' },
     { header: 'Descrição', field: 'descricao', style: 'col-descricao' },
-    { header: 'Preço', field: 'preco', style: 'col-preco' },
+    { header: 'Preço R$', field: 'preco', style: 'col-preco' },
     { header: 'Estoque', field: 'estoque', style: 'col-estoque' },
     { header: 'Ações', field: 'acoes', style: 'col-acoes' }
   ];
@@ -45,12 +45,11 @@ export class ProdutoComponent implements OnInit {
       .subscribe(
         (produto: Produto[]) => {
           this.produtos = produto;
-          this.processandoOperacao = false;
         },
         (error: HttpErrorResponse) => {
           this.toasty.error(this.mensagemDoErro(error));
-          this.processandoOperacao = false;
-        }
+        },
+        () => this.processandoOperacao = false
       )
   }
 
