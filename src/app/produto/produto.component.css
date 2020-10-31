@@ -1,0 +1,10 @@
+.container-border {
+    border: 2px solid rgba(148, 142, 142, 0.774);
+    border-radius: 2px;
+    margin: 4rem 1rem;
+}
+
+.borda-table {
+    border: 2px solid rgba(221, 220, 220, 0.774);
+    border-radius: 2px;
+}

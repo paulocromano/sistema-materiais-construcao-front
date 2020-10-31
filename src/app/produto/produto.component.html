@@ -1,1 +1,45 @@
-<p>produto works!</p>
+<div class="container-border">
+    <p-tabView [activeIndex]="0">
+        <p-tabPanel [header]="'Em Estoque'">
+            <div class="borda-table">
+                <p-table #table [rows]="10" [paginator]="true" [value]="produtos" [columns]="tabViewItems">
+                    <ng-template pTemplate="caption">
+                        <div class="col-12 text-left">
+                            <input type="text" pInputText size="50" placeholder="Pesquisar" [(ngModel)]="pesquisa"
+                                (input)="table.filterGlobal($event.target.value, 'contains')" class="pesquisa">
+                            <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngClass]="col.style" [pSortableColumn]="col.field" class="px-0 px-1 text-center">
+                                {{ col.header }}
+
+                                <p-sortIcon [field]="col.field" *ngIf="col.header !== 'Ações'"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-produto let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns" class="text-center">
+                                {{ produto[col.field] }}
+
+                                <div *ngIf="col.field == 'acoes'" style="display: inline;">
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+    
+        <p-tabPanel [header]="'Esgotado'">
+    
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+<app-toasty #toastyComponent></app-toasty>

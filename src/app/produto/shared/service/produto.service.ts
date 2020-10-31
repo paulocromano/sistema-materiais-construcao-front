@@ -6,6 +6,7 @@ import { ProdutoFORM } from './../model/produto.form';
 import { API_CONFIG } from './../../../config/api.condig';
 import { Produto } from './../model/produto.model';
 import { AtualizarProdutoFORM } from './../model/atualizar-produto.form';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ProdutoService {
 
 
   public listarTodosProdutos(): Observable<Produto[]> {
-    return this.http.get<Produto[]>(`${API_CONFIG.baseUrl}/produto-listar-todos`);
+    return this.http.get<Produto[]>(`${API_CONFIG.baseUrl}/produto/listar-todos`);
   }
 
   public cadastrarProduto(produto: ProdutoFORM): Observable<any> {

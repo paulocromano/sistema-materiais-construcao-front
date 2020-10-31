@@ -10,8 +10,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor(private router: Router) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log(request);
-
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse, caught) => {
                 console.log(error)
