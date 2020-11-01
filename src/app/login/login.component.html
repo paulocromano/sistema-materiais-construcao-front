@@ -17,7 +17,10 @@
                 <input type="password" [(ngModel)]="credenciais.senha" pInputText placeholder="Senha">         
             </div>
 
-            <button class="btn btn-success px-4 mt-4" (click)="login()" [disabled]="processandoOperacao">Entrar</button>
+            <button class="btn btn-success px-4 mt-4" (click)="login()" 
+                [disabled]="validacoesCamposLogin() || processandoOperacao">
+                Entrar
+            </button>
         </div>
 
         <!-- Cadastro -->
@@ -56,7 +59,10 @@
                 </div>
             </div>
 
-            <button class="btn btn-success px-4 mt-4" (click)="cadastroUsuario()" [disabled]="processandoOperacao">Cadastrar</button>
+            <button class="btn btn-success px-4 mt-4" (click)="cadastroUsuario()" 
+                [disabled]="validacoesCamposCadastro() || processandoOperacao">
+                Cadastrar
+            </button>
         </div>
     </div>
 </div>

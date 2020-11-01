@@ -1,4 +1,3 @@
-import { CompraFORM } from './../compra/shared/model/compra.form';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -8,6 +7,7 @@ import { ProdutoService } from './shared/service/produto.service';
 import { AtualizarProdutoFORM } from './shared/model/atualizar-produto.form';
 import { ProdutoFORM } from './shared/model/produto.form';
 import { CompraService } from './../compra/shared/service/compra.service';
+import { CompraFORM } from './../compra/shared/model/compra.form';
 
 @Component({
   selector: 'app-produto',
@@ -60,7 +60,7 @@ export class ProdutoComponent implements OnInit {
           this.produtos = produto;
         },
         (error: HttpErrorResponse) => {
-          this.toasty.error(this.mensagemDoErro(error));
+          this.toasty.error(error);
         },
         () => this.processandoOperacao = false
       )
@@ -83,7 +83,7 @@ export class ProdutoComponent implements OnInit {
           this.listarTodosProdutos();  
         },
         (error: HttpErrorResponse) => {
-          this.toasty.error(this.mensagemDoErro(error));
+          this.toasty.error(error);
         },
         () => this.processandoOperacao
       )
@@ -109,7 +109,7 @@ export class ProdutoComponent implements OnInit {
           this.listarTodosProdutos();
         },
         (error: HttpErrorResponse) => {
-          this.toasty.error(this.mensagemDoErro(error));
+          this.toasty.error(error);
         },
         () => this.processandoOperacao = false
       );
@@ -126,7 +126,7 @@ export class ProdutoComponent implements OnInit {
           this.listarTodosProdutos();
         },
         (error: HttpErrorResponse) => {
-          this.toasty.error(this.mensagemDoErro(error));
+          this.toasty.error(error);
         },
         () => this.processandoOperacao = false
       );
@@ -160,13 +160,16 @@ export class ProdutoComponent implements OnInit {
           this.toasty.success('Compra realizada com sucesso!');
         },
         (error: HttpErrorResponse) => {
-          this.toasty.error('Erro ao comprar Produto!');
+          if (error.status === 422) {
+            this.toasty.mostrarErrosDeValidacoes(error);
+          }
+          else {
+            this.toasty.error('Erro ao comprar Produto!');
+          } 
         },
         () => this.processandoOperacao = false
       );
-  }
 
-  private mensagemDoErro(erro: HttpErrorResponse): string {
-    return JSON.parse(erro.error).message;
+      this.novaCompra = new CompraFORM();
   }
 }

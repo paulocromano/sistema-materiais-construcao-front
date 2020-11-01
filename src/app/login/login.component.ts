@@ -45,51 +45,41 @@ export class LoginComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.log(error)
-        //this.toasty.error(this.mensagemDoErro(error));
+        this.toasty.error(error);
         this.processandoOperacao = false;
       });
 
       this.credenciais = new CredenciaisDTO();
   }
 
+  public validacoesCamposLogin(): boolean {
+    return !(this.credenciais.email && this.credenciais.senha);
+  }
+
   public cadastroUsuario(): void {
-    if (this.validacoesCamposCadastro()) {
-      this.toasty.error('Favor preencher todos os campos antes de efetuar o Cadastro!');
-    }
-    else {
-      this.processandoOperacao = true;
+    this.processandoOperacao = true;
 
-      this.cadastroService.cadastrarUsuario(this.cadastro)
-        .subscribe(
-          (success: any) => {
-            this.toasty.success(`usuario cadastrado com sucesso!`);
-            this.processandoOperacao = false;
-          },
-          (error: HttpErrorResponse) => {
-            if (error.status === 422) {
-              this.errosValidacoesCamposCadastro(error);
-            }
-            else {
-              this.toasty.error('Houve um erro ao efetuar o Cadastro!')
-            }
+    this.cadastroService.cadastrarUsuario(this.cadastro)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success(`usuario cadastrado com sucesso!`);
+          this.processandoOperacao = false;
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 422) {
+            this.toasty.mostrarErrosDeValidacoes(error);
+          }
+          else {
+            this.toasty.error('Houve um erro ao efetuar o Cadastro!')
+          }
 
-            this.processandoOperacao = false;
-        });
+          this.processandoOperacao = false;
+      });
 
-      this.cadastro = new CadastroFORM();
-    }
+    this.cadastro = new CadastroFORM();
   }
 
-  private validacoesCamposCadastro(): boolean {
+  public validacoesCamposCadastro(): boolean {
     return !(this.cadastro.nome && this.cadastro.dataNascimento && this.cadastro.email && this.cadastro.senha);
-  }
-
-  private errosValidacoesCamposCadastro(erro: HttpErrorResponse): void {
-    let errosValidacoes = erro.error.errors;
-    errosValidacoes.forEach(erroValidacao => this.toasty.error(erroValidacao.message));
-  }
-
-  private mensagemDoErro(erro: HttpErrorResponse): string {
-    return JSON.parse(erro.error).message;
   }
 }
