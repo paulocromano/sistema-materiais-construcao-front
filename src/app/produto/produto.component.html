@@ -49,7 +49,8 @@
                                         <i class="fas fa-sync"></i>
                                     </button>
 
-                                    <button class="btn btn-primary btn-sm mx-2" pTooltip="Comprar" tooltipPosition="bottom">
+                                    <button class="btn btn-primary btn-sm mx-2" pTooltip="Comprar" tooltipPosition="bottom"
+                                        (click)="abrirDialogCompraProduto(produto)">
                                         <i class="fas fa-shopping-bag"></i>
                                     </button>
 
@@ -166,6 +167,63 @@
         <button class="btn btn-success" (click)="atualizarProduto()" [disabled]="camposAtualizacaoProdutoEstaoValidos() || processandoOperacao">
             <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
             Atualizar
+        </button>
+    </p-footer>
+</p-dialog>
+
+<!-- Dialog de Atualização do Produto -->
+<p-dialog [(visible)]="mostrarDialogCompraProduto" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '70vh'}">
+
+    <p-header>
+        Comprar Produto
+    </p-header>
+
+    <div>
+        <div class="p-inputgroup" style="width: 130px;">
+            <span class="p-inputgroup-addon">ID</span>
+            <input [value]="produtoSelecionado.id" pInputText [disabled]="true">
+        </div>
+
+        <div class="p-inputgroup my-3">
+            <span class="p-inputgroup-addon">Descrição</span>
+            <input [value]="produtoSelecionado.descricao" pInputText [disabled]="true">
+        </div>
+
+        <div class="row">
+            <div class="p-inputgroup col-7">
+                <span class="p-inputgroup-addon">Preço R$</span>
+                <input [(ngModel)]="produtoSelecionado.preco" type="number" min="0" pInputText [disabled]="true">
+            </div>
+    
+            <div class="p-inputgroup col-5">
+                <span class="p-inputgroup-addon">Estoque</span>
+                <input [(ngModel)]="produtoSelecionado.estoque" type="number" min="0" pInputText [disabled]="true">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="p-inputgroup col">
+                <span class="p-inputgroup-addon">Quantidade</span>
+                <input [(ngModel)]="novaCompra.quantidade" type="number" min="0" pInputText>
+            </div>
+    
+            <div class="p-inputgroup col">
+                <span class="p-inputgroup-addon">Total R$</span>
+                <input #total [value]="atualizarPrecoTotalCompra(produtoSelecionado.preco, novaCompra.quantidade)" pInputText [disabled]="true">
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogCompraProduto = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+
+        <button class="btn btn-success" (click)="comprarProduto()" [disabled]="camposCompraProdutoEstaoValidos(total) || processandoOperacao">
+            <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
+            Comprar
         </button>
     </p-footer>
 </p-dialog>

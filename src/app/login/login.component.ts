@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { CredenciaisDTO } from './shared/model/credenciaisDTO';
+import { CredenciaisDTO } from './shared/model/credenciais.dto';
 import { AuthService } from './../shared/service/auth.service';
 import { ToastyComponent } from './../shared/toasty/toasty.component';
 import { CadastroService } from './shared/service/cadastro.service';
-import { CadastroFORM } from './shared/model/cadastroFORM.model';
+import { CadastroFORM } from './shared/model/cadastro.form';
 
 
 @Component({

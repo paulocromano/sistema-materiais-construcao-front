@@ -1,4 +1,4 @@
-export class Produto {
+export class ProdutoDTO {
     id: number;
     descricao: string;
     preco: string;

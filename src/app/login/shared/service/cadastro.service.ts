@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CadastroFORM } from '../model/cadastroFORM.model';
+import { CadastroFORM } from '../model/cadastro.form';
 
 @Injectable({
   providedIn: 'root'

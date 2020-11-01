@@ -1,11 +1,13 @@
+import { CompraFORM } from './../compra/shared/model/compra.form';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ToastyComponent } from '../shared/toasty/toasty.component';
-import { Produto } from './shared/model/produto.model';
+import { ProdutoDTO } from './shared/model/produto.dto';
 import { ProdutoService } from './shared/service/produto.service';
 import { AtualizarProdutoFORM } from './shared/model/atualizar-produto.form';
 import { ProdutoFORM } from './shared/model/produto.form';
+import { CompraService } from './../compra/shared/service/compra.service';
 
 @Component({
   selector: 'app-produto',
@@ -22,11 +24,13 @@ export class ProdutoComponent implements OnInit {
   public mostrarDialogAtualizacaoProduto: boolean = false;
   public mostrarDialogRemoverProduto: boolean = false;
   public mostrarDialogCadastroProduto: boolean = false;
+  public mostrarDialogCompraProduto: boolean = false;
 
-  public produtos: Produto[];
-  public produtoParaAtualizar = new AtualizarProdutoFORM(new Produto);
-  public produtoSelecionado = new Produto();
+  public produtos: ProdutoDTO[];
+  public produtoParaAtualizar = new AtualizarProdutoFORM(new ProdutoDTO);
+  public produtoSelecionado = new ProdutoDTO();
   public novoProduto = new ProdutoFORM();
+  public novaCompra = new CompraFORM();
 
 
   public tabViewItems = [
@@ -38,7 +42,8 @@ export class ProdutoComponent implements OnInit {
   ];
 
   constructor(
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private compraService: CompraService
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +56,7 @@ export class ProdutoComponent implements OnInit {
 
     this.produtoService.listarTodosProdutos()
       .subscribe(
-        (produto: Produto[]) => {
+        (produto: ProdutoDTO[]) => {
           this.produtos = produto;
         },
         (error: HttpErrorResponse) => {
@@ -61,7 +66,7 @@ export class ProdutoComponent implements OnInit {
       )
   }
 
-  public abrirDialogParaAtualizarProduto(produto: Produto): void {
+  public abrirDialogParaAtualizarProduto(produto: ProdutoDTO): void {
     this.mostrarDialogAtualizacaoProduto = true;
     this.produtoSelecionado = produto;
     this.produtoParaAtualizar = new AtualizarProdutoFORM(produto);
@@ -88,7 +93,7 @@ export class ProdutoComponent implements OnInit {
     return !(this.produtoParaAtualizar.preco && this.produtoParaAtualizar.estoque);
   }
 
-  public abrirDialogParaRemoverProduto(produto: Produto): void {
+  public abrirDialogParaRemoverProduto(produto: ProdutoDTO): void {
     this.mostrarDialogRemoverProduto = true;
     this.produtoSelecionado = produto;
   }
@@ -125,10 +130,40 @@ export class ProdutoComponent implements OnInit {
         },
         () => this.processandoOperacao = false
       );
+
+      this.novoProduto = new ProdutoFORM();
   }
 
   public camposCadastroProdutoEstaoValidos(): boolean {
     return !(this.novoProduto.descricao && this.novoProduto.preco && this.novoProduto.estoque);
+  }
+
+  public abrirDialogCompraProduto(produto: ProdutoDTO): void {
+    this.mostrarDialogCompraProduto = true;
+    this.produtoSelecionado = produto;
+  }
+
+  public atualizarPrecoTotalCompra(preco: string, quantidade: number): string {
+    return (preco && quantidade) ? (parseFloat(preco) * quantidade).toFixed(2) : '0.00';
+  }
+
+  public camposCompraProdutoEstaoValidos(total: any): boolean {
+    return !(this.novaCompra.quantidade && total !== '0.00');
+  }
+
+  public comprarProduto(): void {
+    this.processandoOperacao = true;
+
+    this.compraService.comprarProduto(this.produtoSelecionado.id, this.novaCompra)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success('Compra realizada com sucesso!');
+        },
+        (error: HttpErrorResponse) => {
+          this.toasty.error('Erro ao comprar Produto!');
+        },
+        () => this.processandoOperacao = false
+      );
   }
 
   private mensagemDoErro(erro: HttpErrorResponse): string {

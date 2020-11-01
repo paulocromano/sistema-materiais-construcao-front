@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { API_CONFIG } from './../../config/api.condig';
-import { CredenciaisDTO } from '../../login/shared/model/credenciaisDTO';
+import { CredenciaisDTO } from '../../login/shared/model/credenciais.dto';
 import { LocalUser } from './../model/localUser';
 import { StorageService } from './storage.service';
 

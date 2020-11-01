@@ -17,6 +17,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { TokenService } from './shared/service/token.service';
+import { CompraModule } from './compra/compra.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TokenService } from './shared/service/token.service';
     ProdutoModule,
     DashboardModule,
     ClienteModule,
+    CompraModule,
     JwtModule
   ],
   providers: [
