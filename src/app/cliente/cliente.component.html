@@ -1,19 +1,18 @@
 <app-dashboard></app-dashboard>
 
 <div class="container-border">
-
     <p-tabView>
         <p-tabPanel [header]="'Clientes'">
 
             <div class="borda-table">
-                <p-table #table [rows]="5" [paginator]="true" [value]="clientes" [columns]="tabViewItems">
+                <p-table #tableCliente [rows]="5" [paginator]="true" [value]="clientes" [columns]="tabViewCliente">
 
                     <!-- Parte superior da Tabela -->
                     <ng-template pTemplate="caption">
                         <div class="row">
                             <div class="col-8 text-left">
                                 <input type="text" pInputText size="50" placeholder="Pesquisar" [(ngModel)]="pesquisa"
-                                    (input)="table.filterGlobal($event.target.value, 'contains')">
+                                    (input)="tableCliente.filterGlobal($event.target.value, 'contains')">
                                 <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
                             </div>
 
@@ -47,11 +46,17 @@
 
                                 <!-- Coluna de Ações -->
                                 <div *ngIf="col.field === 'acoes'" style="display: inline;">
-                                    <button class="btn btn-info btn-sm px-3" pTooltip="Informações" tooltipPosition="bottom">
+                                    <button class="btn btn-info btn-sm px-3" pTooltip="Informações" tooltipPosition="bottom"
+                                        (click)="abrirDialogInformacoesCliente(cliente)">
                                         <i class="fas fa-info"></i>
                                     </button>
 
-                                    <button class="btn btn-warning btn-sm mx-2" pTooltip="Adicionar Permissão" tooltipPosition="bottom">
+                                    <button class="btn bg-secondary btn-sm mx-2" [disabled]="cliente.compras.length === 0" pTooltip="Visualizar Compras" 
+                                        tooltipPosition="bottom" (click)="abrirDialogComprasCliente(cliente)">
+                                        <i class="fas fa-shopping-bag" style="color: white;"></i>
+                                    </button>
+
+                                    <button class="btn btn-warning btn-sm mr-2" pTooltip="Adicionar Permissão" tooltipPosition="bottom">
                                         <i class="fas fa-user-tie"></i>
                                     </button>
 
@@ -85,5 +90,195 @@
         </p-tabPanel>
     </p-tabView>
 </div>
+
+<!-- Dialog de Cadastro de Cliente -->
+<p-dialog [(visible)]="mostrarDialogCadastroCliente" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '100vh'}">
+
+    <p-header>
+        Cadastro de Cliente
+    </p-header>
+
+    <div>
+        <div class="p-inputgroup mt-3">
+            <span class="p-inputgroup-addon"><i class="fas fa-user"></i></span>
+            <input type="text" [(ngModel)]="cadastro.nome" pInputText placeholder="Nome Completo">         
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-5">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="fas fa-birthday-cake"></i></span>
+                    <input type="text" [(ngModel)]="cadastro.dataNascimento" pInputText placeholder="Data de Nascimento">         
+                </div>
+            </div>
+
+            <div class="col-7">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="fas fa-envelope"></i></span>
+                    <input type="email" [(ngModel)]="cadastro.email" pInputText placeholder="Email">         
+                </div>
+            </div>
+        </div>
+
+        <div class="p-inputgroup mt-2">
+            <span class="p-inputgroup-addon"><i class="fas fa-key"></i></span>
+            <input type="password" [(ngModel)]="cadastro.senha" pInputText placeholder="Senha">         
+        </div>
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogCadastroCliente = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+
+        <button class="btn btn-success" (click)="cadastrarCliente()" [disabled]="camposCadastroClienteEstaoValidos() || processandoOperacao">
+            <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
+            Cadastrar
+        </button>
+    </p-footer>
+</p-dialog>
+
+<!-- Dialog de Informações do Cliente -->
+<p-dialog [(visible)]="mostrarDialogInformacoesCliente" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '100vh'}">
+
+    <p-header>
+        Informações do Cliente
+    </p-header>
+
+    <div>
+        <div class="row mt-2">
+            <div class="col-3">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">ID</span>
+                    <input type="text" [(ngModel)]="clienteSelecionado.id" pInputText [disabled]="true">         
+                </div>
+            </div>
+
+            <div class="col-9">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Nome</span>
+                    <input type="text" [(ngModel)]="clienteSelecionado.nome" pInputText [disabled]="true">         
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-6">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Data de Nascimento</span>
+                    <input type="text" [(ngModel)]="clienteSelecionado.dataNascimento" pInputText [disabled]="true">         
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Telefone</span>
+                    <input type="text" [(ngModel)]="clienteSelecionado.telefone" pInputText [disabled]="true">         
+                </div>
+            </div>
+        </div>
+
+        <div class="p-inputgroup mt-2">
+            <span class="p-inputgroup-addon">Email</span>
+            <input type="text" [(ngModel)]="clienteSelecionado.email" pInputText [disabled]="true">         
+        </div>
+
+        <div class="p-inputgroup mt-2">
+            <span class="p-inputgroup-addon">Permissões</span>
+            <input type="text" [(ngModel)]="clienteSelecionado.permissoes" pInputText [disabled]="true">         
+        </div>
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogInformacoesCliente = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+    </p-footer>
+</p-dialog>
+
+<!-- Dialog das Compras do Cliente -->
+<p-dialog [(visible)]="mostrarDialogComprasCliente" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '95%'}">
+
+    <p-header>
+        Compras do(a) Cliente <b>{{ clienteSelecionado.nome }}</b>
+    </p-header>
+
+    <div class="container-border">
+        <p-tabView>
+            <div class="borda-table">
+                <p-table #tableCompra [rows]="5" [paginator]="true" [value]="clienteSelecionado.compras" [columns]="tabViewCompra">
+
+                    <!-- Parte superior da Tabela -->
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-8 text-left">
+                                <input type="text" pInputText size="50" placeholder="Pesquisar" [(ngModel)]="pesquisa"
+                                    (input)="tableCompra.filterGlobal($event.target.value, 'contains')">
+                                <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <!-- Headers da Tabela -->
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngClass]="col.style" [pSortableColumn]="col.field" class="px-0 px-1 text-center">
+                                {{ col.header }}
+
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                     <!-- Body da Tabela -->
+                     <ng-template pTemplate="body" let-compra let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns" class="text-center">
+                                <div *ngIf="col.field !== 'preco'" >
+                                    {{ (compra[col.field]?.descricao) ? compra[col.field].descricao : compra[col.field] }}
+                                </div>
+
+                                <div *ngIf="col.field === 'preco'">
+                                    {{ compra.preco.toFixed(2).replace('.', ',') }}
+                                </div>
+
+                                <div *ngIf="col.field === 'total' && !compra[col.field]">
+                                    {{ (compra.quantidade * compra.preco).toFixed(2).replace('.', ',') }}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Caso não haja Compras -->
+                    <ng-template pTemplate="emptymessage" let-cols>
+                        <tr>
+                            <td [attr.colspan]="cols.length" class="text-center">
+                                Nenhuma Compra encontrada!
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Parte inferior da tabela -->
+                    <ng-template pTemplate="summary">
+                        <div class="text-center">Compras Feitas: {{ clienteSelecionado.compras.length }}</div>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabView>
+
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogComprasCliente = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+    </p-footer>
+</p-dialog>
 
 <app-toasty #toastyComponent></app-toasty>

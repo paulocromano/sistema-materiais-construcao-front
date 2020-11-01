@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -16,7 +17,8 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
   public listarTodosClientes(): Observable<ClienteDTO[]> {
-    return this.http.get<ClienteDTO[]>(`${API_CONFIG.baseUrl}/cliente/listar-todos`);
+    return this.http.get<ClienteDTO[]>(`${API_CONFIG.baseUrl}/cliente/listar-todos`)
+      .pipe(tap(console.log));
   }
 
   public cadastrarUsuario(dadosNovoUsuario: ClienteFORM): Observable<any> {
