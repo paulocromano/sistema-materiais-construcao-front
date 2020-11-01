@@ -12,6 +12,8 @@ import { StorageService } from './shared/service/storage.service';
 import { ErrorInterceptorProvider } from './interceptor/error-interceptor';
 import { ProdutoModule } from './produto/produto.module';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { ClienteModule } from './cliente/cliente.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { AuthGuard } from './shared/guards/auth.guard';
     HttpClientModule,
     AppRoutingModule,
     LoginModule,
-    ProdutoModule
+    ProdutoModule,
+    DashboardModule,
+    ClienteModule
   ],
   providers: [
     AuthService,

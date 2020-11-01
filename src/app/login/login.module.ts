@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { LoginComponent } from './login.component';
+import { DashboardModule } from './../dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LoginComponent } from './login.component';
     CommonModule,
     FormsModule,
     InputTextModule,
-    ToastyModule
+    ToastyModule,
+    DashboardModule
   ]
 })
 export class LoginModule { }

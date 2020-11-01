@@ -5,6 +5,7 @@ import { ToastyComponent } from '../shared/toasty/toasty.component';
 import { Produto } from './shared/model/produto.model';
 import { ProdutoService } from './shared/service/produto.service';
 import { AtualizarProdutoFORM } from './shared/model/atualizar-produto.form';
+import { ProdutoFORM } from './shared/model/produto.form';
 
 @Component({
   selector: 'app-produto',
@@ -19,10 +20,13 @@ export class ProdutoComponent implements OnInit {
   public pesquisa: string;
   public processandoOperacao: boolean = false;
   public mostrarDialogAtualizacaoProduto: boolean = false;
+  public mostrarDialogRemoverProduto: boolean = false;
+  public mostrarDialogCadastroProduto: boolean = false;
 
   public produtos: Produto[];
   public produtoParaAtualizar = new AtualizarProdutoFORM(new Produto);
   public produtoSelecionado = new Produto();
+  public novoProduto = new ProdutoFORM();
 
 
   public tabViewItems = [
@@ -82,6 +86,49 @@ export class ProdutoComponent implements OnInit {
 
   public camposAtualizacaoProdutoEstaoValidos(): boolean {
     return !(this.produtoParaAtualizar.preco && this.produtoParaAtualizar.estoque);
+  }
+
+  public abrirDialogParaRemoverProduto(produto: Produto): void {
+    this.mostrarDialogRemoverProduto = true;
+    this.produtoSelecionado = produto;
+  }
+
+  public removerProduto(): void {
+    this.processandoOperacao = true;
+
+    this.produtoService.removerProduto(this.produtoSelecionado.id)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success('Produto removido com sucesso!');
+          this.mostrarDialogRemoverProduto = false;
+          this.listarTodosProdutos();
+        },
+        (error: HttpErrorResponse) => {
+          this.toasty.error(this.mensagemDoErro(error));
+        },
+        () => this.processandoOperacao = false
+      );
+  }
+
+  public cadastrarProduto(): void {
+    this.processandoOperacao = true;
+
+    this.produtoService.cadastrarProduto(this.novoProduto)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success('Produto cadastrado com sucesso!');
+          this.mostrarDialogCadastroProduto = false;
+          this.listarTodosProdutos();
+        },
+        (error: HttpErrorResponse) => {
+          this.toasty.error(this.mensagemDoErro(error));
+        },
+        () => this.processandoOperacao = false
+      );
+  }
+
+  public camposCadastroProdutoEstaoValidos(): boolean {
+    return !(this.novoProduto.descricao && this.novoProduto.preco && this.novoProduto.estoque);
   }
 
   private mensagemDoErro(erro: HttpErrorResponse): string {

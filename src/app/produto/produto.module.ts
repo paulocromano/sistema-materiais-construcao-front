@@ -11,6 +11,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {DialogModule} from 'primeng/dialog';
 
+import { DashboardModule } from './../dashboard/dashboard.module';
+
 @NgModule({
   declarations: [
     ProdutoComponent
@@ -24,7 +26,8 @@ import {DialogModule} from 'primeng/dialog';
     TooltipModule,
     ProgressSpinnerModule,
     DialogModule,
-    ToastyModule
+    ToastyModule,
+    DashboardModule
   ]
 })
 

@@ -1,0 +1,7 @@
+.dashboard {
+    height: 60px;
+    background-color: rgba(229, 233, 233, 0.815);
+    border-bottom: 1px solid rgba(152, 202, 248, 0.603);
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px rgba(122, 122, 122, 0.582);
+}
