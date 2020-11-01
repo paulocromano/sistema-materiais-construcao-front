@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { JwtModule } from "@auth0/angular-jwt";
+
 import { LoginModule } from './login/login.module';
 import { AuthService } from './shared/service/auth.service';
 import { StorageService } from './shared/service/storage.service';
@@ -14,6 +16,7 @@ import { ProdutoModule } from './produto/produto.module';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ClienteModule } from './cliente/cliente.module';
+import { TokenService } from './shared/service/token.service';
 
 @NgModule({
   declarations: [
@@ -27,11 +30,13 @@ import { ClienteModule } from './cliente/cliente.module';
     LoginModule,
     ProdutoModule,
     DashboardModule,
-    ClienteModule
+    ClienteModule,
+    JwtModule
   ],
   providers: [
     AuthService,
     AuthGuard,
+    TokenService,
     StorageService,
     ErrorInterceptorProvider
   ],

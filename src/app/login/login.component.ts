@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
         this.processandoOperacao = false;
       },
       (error: HttpErrorResponse) => {
-        this.toasty.error(this.mensagemDoErro(error));
+        console.log(error)
+        //this.toasty.error(this.mensagemDoErro(error));
         this.processandoOperacao = false;
       });
 
