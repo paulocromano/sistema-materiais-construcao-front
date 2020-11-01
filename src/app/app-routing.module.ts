@@ -7,9 +7,9 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { ClienteComponent } from './cliente/cliente.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'produto', component: ProdutoComponent, canActivate: [AuthGuard] },
-  { path: 'cliente', component: ClienteComponent, canActivate: [AuthGuard] }
+  /*{ path: 'login', component: LoginComponent },
+  { path: 'produto', component: ProdutoComponent, canActivate: [AuthGuard] },*/
+  { path: '**', component: ClienteComponent }
 ];
 
 @NgModule({

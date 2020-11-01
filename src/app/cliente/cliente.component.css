@@ -1,0 +1,31 @@
+.container-border {
+    border: 2px solid rgba(148, 142, 142, 0.774);
+    border-radius: 2px;
+    margin: 4rem 1rem;
+}
+
+.borda-table {
+    border: 2px solid rgba(209, 209, 209, 0.774);
+    border-radius: 2px;
+}
+
+/* Classes das Colunas da Tabela */
+.col-id {
+    width: 10%;
+}
+
+.col-nome {
+    width: 40%;
+}
+
+.col-dataNascimento {
+    width: 16%;
+}
+
+.col-telefone {
+    width: 15%;
+}
+
+.col-acoes {
+    width:  19%;
+}

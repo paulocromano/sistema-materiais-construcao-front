@@ -1,1 +1,89 @@
-<p>cliente works!</p>
+<app-dashboard></app-dashboard>
+
+<div class="container-border">
+
+    <p-tabView>
+        <p-tabPanel [header]="'Clientes'">
+
+            <div class="borda-table">
+                <p-table #table [rows]="5" [paginator]="true" [value]="clientes" [columns]="tabViewItems">
+
+                    <!-- Parte superior da Tabela -->
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-8 text-left">
+                                <input type="text" pInputText size="50" placeholder="Pesquisar" [(ngModel)]="pesquisa"
+                                    (input)="table.filterGlobal($event.target.value, 'contains')">
+                                <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
+                            </div>
+
+                            <div class="col-4 text-right">
+                                <button class="btn btn-success px-5" (click)="mostrarDialogCadastroCliente = true">
+                                    <i class="fas fa-plus"></i>
+                                    Cadastrar Cliente
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <!-- Headers da Tabela -->
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngClass]="col.style" [pSortableColumn]="col.field" class="px-0 px-1 text-center">
+                                {{ col.header }}
+
+                                <p-sortIcon [field]="col.field" *ngIf="col.header !== 'Ações'"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Body da Tabela -->
+                    <ng-template pTemplate="body" let-cliente let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns" class="text-center">
+                                {{ cliente[col.field] }}
+
+                                <div *ngIf="col.field === 'telefone' && !cliente[col.field]">---</div>
+
+                                <!-- Coluna de Ações -->
+                                <div *ngIf="col.field === 'acoes'" style="display: inline;">
+                                    <button class="btn btn-info btn-sm px-3" pTooltip="Informações" tooltipPosition="bottom">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+
+                                    <button class="btn btn-warning btn-sm mx-2" pTooltip="Adicionar Permissão" tooltipPosition="bottom">
+                                        <i class="fas fa-user-tie"></i>
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm" pTooltip="Remover" tooltipPosition="bottom">
+                                        <i class="fas fa-user-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Caso não haja Clientes -->
+                    <ng-template pTemplate="emptymessage" let-cols>
+                        <tr>
+                            <td [attr.colspan]="cols.length" *ngIf="!this.processandoOperacao" class="text-center">
+                                Nenhum Cliente encontrado!
+                            </td>
+
+                            <td class="text-center" [attr.colspan]="cols.length" *ngIf="this.processandoOperacao">
+                                <p-progressSpinner [strokeWidth]="3"></p-progressSpinner>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Parte inferior da tabela -->
+                    <ng-template pTemplate="summary">
+                        <div class="text-center">Clientes Cadastrados: {{ (clientes) ? clientes.length : 0 }}</div>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+<app-toasty #toastyComponent></app-toasty>

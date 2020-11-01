@@ -1,3 +1,14 @@
-<div class="dashboard">
-
-</div>
+<body>
+    <header>
+        <label class="logo">MATERIAL DE CONSTRUÇÃO</label>
+        <nav *ngIf="usuarioEstaLogado">
+            <ul class="navLink">
+                <li><a href="#">Produto</a></li>
+                <li><a href="#">Compra</a></li>
+                <li><a href="#">Clientes</a></li>
+                <li><a href="#">Perfil</a></li>
+            </ul>
+        </nav>
+        <a class="loginButton" href="#"><button>{{ (usuarioEstaLogado) ? 'Logout' : 'Login' }}</button></a>
+    </header>
+</body>

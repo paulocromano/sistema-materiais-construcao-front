@@ -1,4 +1,4 @@
-export class CadastroFORM {
+export class ClienteFORM {
     nome: string;
     email: string;
     dataNascimento: string;

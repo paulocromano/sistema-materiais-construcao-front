@@ -6,14 +6,14 @@
         <p-tabPanel [header]="'Produtos'">
 
             <div class="borda-table">
-                <p-table #table [rows]="10" [paginator]="true" [value]="produtos" [columns]="tabViewItems">
+                <p-table #table [rows]="5" [paginator]="true" [value]="produtos" [columns]="tabViewItems">
 
                     <!-- Parte superior da Tabela -->
                     <ng-template pTemplate="caption">
                         <div class="row">
                             <div class="col-8 text-left">
                                 <input type="text" pInputText size="50" placeholder="Pesquisar" [(ngModel)]="pesquisa"
-                                    (input)="table.filterGlobal($event.target.value, 'contains')" class="pesquisa">
+                                    (input)="table.filterGlobal($event.target.value, 'contains')">
                                 <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
                             </div>
     
@@ -43,7 +43,8 @@
                             <td *ngFor="let col of columns" class="text-center">
                                 {{ produto[col.field] }}
 
-                                <div *ngIf="col.field == 'acoes'" style="display: inline;">
+                                <!-- Coluna de Ações -->
+                                <div *ngIf="col.field === 'acoes'" style="display: inline;">
                                     <button class="btn btn-warning btn-sm" pTooltip="Atualizar" tooltipPosition="bottom"
                                         (click)="abrirDialogParaAtualizarProduto(produto)">
                                         <i class="fas fa-sync"></i>

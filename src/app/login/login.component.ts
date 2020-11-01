@@ -1,3 +1,4 @@
+import { ClienteService } from './../cliente/shared/service/cliente.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -5,8 +6,7 @@ import { Router } from '@angular/router';
 import { CredenciaisDTO } from './shared/model/credenciais.dto';
 import { AuthService } from './../shared/service/auth.service';
 import { ToastyComponent } from './../shared/toasty/toasty.component';
-import { CadastroService } from './shared/service/cadastro.service';
-import { CadastroFORM } from './shared/model/cadastro.form';
+import { ClienteFORM } from '../cliente/shared/model/cliente.form';
 
 
 @Component({
@@ -21,12 +21,12 @@ export class LoginComponent implements OnInit {
   public toasty: ToastyComponent;
 
   public credenciais = new CredenciaisDTO();
-  public cadastro = new CadastroFORM();
+  public cadastro = new ClienteFORM();
   public processandoOperacao: boolean = false;
 
   constructor(
     private authService: AuthService,
-    private cadastroService: CadastroService,
+    private clienteService: ClienteService,
     private router: Router
     ) { }
 
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
   public cadastroUsuario(): void {
     this.processandoOperacao = true;
 
-    this.cadastroService.cadastrarUsuario(this.cadastro)
+    this.clienteService.cadastrarUsuario(this.cadastro)
       .subscribe(
         (success: any) => {
           this.toasty.success(`usuario cadastrado com sucesso!`);
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
           this.processandoOperacao = false;
       });
 
-    this.cadastro = new CadastroFORM();
+    this.cadastro = new ClienteFORM();
   }
 
   public validacoesCamposCadastro(): boolean {
