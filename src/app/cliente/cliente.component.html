@@ -56,11 +56,13 @@
                                         <i class="fas fa-shopping-bag" style="color: white;"></i>
                                     </button>
 
-                                    <button class="btn btn-warning btn-sm mr-2" pTooltip="Adicionar Permissão" tooltipPosition="bottom">
+                                    <button class="btn btn-warning btn-sm mr-2" pTooltip="Adicionar Permissão" tooltipPosition="bottom"
+                                        (click)="abrirDialogPermissaoParaCliente(cliente)">
                                         <i class="fas fa-user-tie"></i>
                                     </button>
 
-                                    <button class="btn btn-danger btn-sm" pTooltip="Remover" tooltipPosition="bottom">
+                                    <button class="btn btn-danger btn-sm" pTooltip="Remover" tooltipPosition="bottom"
+                                        (click)="abrirDialogRemoverCliente(cliente)">
                                         <i class="fas fa-user-times"></i>
                                     </button>
                                 </div>
@@ -265,7 +267,7 @@
 
                     <!-- Parte inferior da tabela -->
                     <ng-template pTemplate="summary">
-                        <div class="text-center">Compras Feitas: {{ clienteSelecionado.compras.length }}</div>
+                        <div class="text-center">Compras Feitas: {{ (clienteSelecionado.compras) ? clienteSelecionado.compras.length : 0 }}</div>
                     </ng-template>
                 </p-table>
             </div>
@@ -277,6 +279,57 @@
         <button class="btn btn-danger" (click)="mostrarDialogComprasCliente = false">
             <i class="fas fa-arrow-circle-left"></i>
             Voltar
+        </button>
+    </p-footer>
+</p-dialog>
+
+<!-- Dialog de Permissão para Cliente -->
+<p-dialog [(visible)]="mostrarDialogParaAdicionarPermissao" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '80vh'}">
+
+    <p-header>
+        Conceder Permissão ao Cliente
+    </p-header>
+
+    <div>
+        Deseja dar Permissão de <b>ADMINISTRADOR</b> para o(a) Cliente <b>{{ clienteSelecionado.nome }}</b> 
+        com ID <b>{{ clienteSelecionado.id }}</b>?
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogParaAdicionarPermissao = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+
+        <button class="btn btn-success" (click)="adicionarPermissaoAoCliente()" [disabled]="processandoOperacao">
+            <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
+            Confirmar
+        </button>
+    </p-footer>
+</p-dialog>
+
+<!-- Dialog para Remover Cliente -->
+<p-dialog [(visible)]="mostrarDialogRemoverCliente" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '80vh'}">
+
+    <p-header>
+        Remover Cliente
+    </p-header>
+
+    <div>
+        Confirma a exclusão do(a) Cliente <b>{{ clienteSelecionado.nome }}</b> com ID <b>{{ clienteSelecionado.id }}</b>?
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="mostrarDialogRemoverCliente = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+
+        <button class="btn btn-success" (click)="removerCliente()" [disabled]="processandoOperacao">
+            <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
+            Confirmar
         </button>
     </p-footer>
 </p-dialog>

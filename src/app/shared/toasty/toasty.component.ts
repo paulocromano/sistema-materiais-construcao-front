@@ -47,10 +47,6 @@ export class ToastyComponent implements OnInit {
   }
 
   private verificarSeMensagemVemDoBackEnd(mensagem: string | HttpErrorResponse): string {
-    return (typeof mensagem === 'string') ? mensagem : this.converterJSONParaMensagem(mensagem);
-  }
-
-  private converterJSONParaMensagem(erro: any): string {
-    return JSON.parse(erro.error).message;
+    return (typeof mensagem === 'string') ? mensagem : mensagem.error.message;
   }
 }

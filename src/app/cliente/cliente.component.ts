@@ -97,12 +97,56 @@ export class ClienteComponent implements OnInit {
   }
 
   public abrirDialogInformacoesCliente(cliente: ClienteDTO): void {
-    this.mostrarDialogInformacoesCliente = true;
     this.clienteSelecionado = cliente;
+    this.mostrarDialogInformacoesCliente = true;
   }
 
   public abrirDialogComprasCliente(cliente: ClienteDTO): void {
-    this.mostrarDialogComprasCliente = true;
     this.clienteSelecionado = cliente;
+    this.mostrarDialogComprasCliente = true;
+  }
+
+  public abrirDialogPermissaoParaCliente(cliente: ClienteDTO): void {
+    this.clienteSelecionado = cliente;
+    this.mostrarDialogParaAdicionarPermissao = true;
+  }
+
+  public adicionarPermissaoAoCliente(): void {
+    this.processandoOperacao = true;
+
+    this.clienteService.adicionarPermissaoParaCliente(this.clienteSelecionado.id)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success(`O(A) Cliente ${this.clienteSelecionado.nome} agora tem permissão de ADMINISTRADOR!`)
+          this.mostrarDialogParaAdicionarPermissao = false;
+          this.listarTodosClientes();
+        },
+        (error: HttpErrorResponse) => {
+          this.toasty.error(error);
+        },
+        () => this.processandoOperacao = false
+      );
+  }
+
+  public abrirDialogRemoverCliente(cliente: ClienteDTO): void {
+    this.clienteSelecionado = cliente;
+    this.mostrarDialogRemoverCliente = true;
+  }
+
+  public removerCliente(): void {
+    this.processandoOperacao = true;
+
+    this.clienteService.removerCliente(this.clienteSelecionado.id)
+      .subscribe(
+        (success: any) => {
+          this.toasty.success(`Cliente ${this.clienteSelecionado.nome} removido(a) com sucesso!`);
+          this.mostrarDialogRemoverCliente = false;
+          this.listarTodosClientes();
+        },
+        (error: HttpErrorResponse) =>{
+          this.toasty.error(error);
+        },
+        () => this.processandoOperacao = false
+      );
   }
 }

@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.925), rgba(0, 0, 0, 0.829)), url("./img/background.jpg");
+    background-size: cover;
+    height: 100vh;
+}
+
+.home{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+h1, a{
+    font-family: "Montserrat", sans-serif;
+    color: whitesmoke;
+}
+
+h1{
+    animation: upAnimation 1.5s ease;
+    font-size: 65px;
+}
+
+
+button{
+    animation: upAnimationButton 2.5s ease;
+    margin-left: 20px;
+    padding: 9px 25px;
+    border: none;
+    /*border-radius: 50px;*/
+    cursor: pointer;
+    background: rgb(2, 32, 39);
+    margin-top: 20px;
+    color: #edf0f1;
+    letter-spacing: 4px;
+}
+
+button:before{
+    content: attr(data-text);
+    position: absolute;
+    text-align: center;    
+    transition: 0.5s;
+    transform-origin: bottom;
+    transform: translateY(-124%) rotateX(90deg);
+    background: rgb(73, 90, 95);
+    padding: 9px 25px;
+    margin-left: -25px;
+
+}
+
+button:hover:before{
+    transform: translateY(-26%) rotateX(0deg);
+}
+
+button:after{
+    content: attr(data-text);
+    position: absolute;
+    text-align: center;    
+    transition: 0.5s;
+    transform-origin: top;
+    transform: translateY(-26%) rotateX(0deg);
+    background: rgb(37, 52, 56);
+    padding: 9px 25px;
+    margin-left: -98px;
+}
+
+button:hover:after{
+    transform: translateY(70%) rotateX(90deg);
+}
+
+
+@keyframes upAnimation{
+	0%{
+		opacity: 0;
+		transform: translateY(80px);
+        text-shadow: 0 30px 25px #000;
+        color: rgba(40, 39, 131, 0.829);
+
+	}
+	100%{
+		opacity: 1;
+		transform: translateY(0px);
+        text-shadow: 0 0 0 #000;
+        color: white;
+	}
+}
+
+@keyframes upAnimationButton{
+	0%{
+		opacity: 0;
+		transform: translateY(100px);
+        text-shadow: 0 30px 25px #000;
+        color: rgba(0, 0, 0, 0.829);
+
+	}
+	100%{
+		opacity: 1;
+		transform: translateY(0px);
+        text-shadow: 0 0 0 #000;
+        color: white;
+	}
+}

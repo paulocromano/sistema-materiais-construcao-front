@@ -18,6 +18,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { TokenService } from './shared/service/token.service';
 import { CompraModule } from './compra/compra.module';
+import { PaginaInicialModule } from './pagina-inicial/pagina-inicial.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { CompraModule } from './compra/compra.module';
     DashboardModule,
     ClienteModule,
     CompraModule,
+    PaginaInicialModule,
     JwtModule
   ],
   providers: [
