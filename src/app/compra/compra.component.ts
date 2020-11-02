@@ -19,8 +19,11 @@ export class CompraComponent implements OnInit {
 
   public pesquisa: string;
   public processandoOperacao: boolean = false;
+  public temPermissaoDeADMIN: boolean = false;
 
-  public compras: CompraDTO[];
+  public comprasClientes: CompraDTO[];
+  public comprasClienteLogado: CompraDTO[];
+  public totalEmCompras: number = 0;
 
   public tabView = [
     { header: 'ID', field: 'id', style: 'col-id' },
@@ -36,6 +39,7 @@ export class CompraComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.temPermissaoDeADMIN = this.tokenService.temPermissaoDeADMIN();
     this.listarCompras();
   }
 
@@ -43,19 +47,19 @@ export class CompraComponent implements OnInit {
   public listarCompras(): void {
     this.processandoOperacao = true;
 
-    if (this.tokenService.temPermissaoDeADMIN()) {
+    if (this.temPermissaoDeADMIN) {
       this.listarTodasCompras();
     }
-    else {
-      this.listarComprasDoClienteLogado();
-    }
+    
+    this.listarComprasDoClienteLogado();
+    this.totalComprasDoClientelogado();
   }
 
   private listarTodasCompras(): void {
     this.compraService.listarTodasCompras()
       .subscribe(
         (compra: CompraDTO[]) => {
-          this.compras = compra;
+          this.comprasClientes = compra;
         },
         (error: HttpErrorResponse) => {
           this.toasty.error(error);
@@ -68,12 +72,24 @@ export class CompraComponent implements OnInit {
     this.compraService.listarComprasCliente()
     .subscribe(
       (compra: CompraDTO[]) => {
-        this.compras = compra;
+        this.comprasClienteLogado = compra;
       },
       (error: HttpErrorResponse) => {
         this.toasty.error(error);
       },
       () => this.processandoOperacao = false
     );
+  }
+
+  private totalComprasDoClientelogado(): void {
+    this.compraService.getTotalComprasCliente()
+      .subscribe(
+        (total: number) => {
+          this.totalEmCompras = total;
+        },
+        (error: HttpErrorResponse) => {
+          this.toasty.error('Erro ao calcular valor total das Compras');
+        }
+      );
   }
 }

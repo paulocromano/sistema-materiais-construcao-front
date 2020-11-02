@@ -44,8 +44,8 @@
 
                                 <!-- Coluna de Ações -->
                                 <div *ngIf="col.field === 'acoes'" style="display: inline;">
-                                    <button class="btn btn-warning btn-sm" pTooltip="Atualizar" tooltipPosition="bottom"
-                                        (click)="abrirDialogParaAtualizarProduto(produto)">
+                                    <button *ngIf="clienteLogadoisADMIN" class="btn btn-warning btn-sm" pTooltip="Atualizar" 
+                                        tooltipPosition="bottom" (click)="abrirDialogParaAtualizarProduto(produto)">
                                         <i class="fas fa-sync"></i>
                                     </button>
 
@@ -54,8 +54,8 @@
                                         <i class="fas fa-shopping-bag"></i>
                                     </button>
 
-                                    <button class="btn btn-danger btn-sm" pTooltip="Remover" tooltipPosition="bottom"
-                                        (click)="abrirDialogParaRemoverProduto(produto)">
+                                    <button *ngIf="clienteLogadoisADMIN" class="btn btn-danger btn-sm" pTooltip="Remover" 
+                                        tooltipPosition="bottom" (click)="abrirDialogParaRemoverProduto(produto)">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>

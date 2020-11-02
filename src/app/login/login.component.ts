@@ -38,8 +38,6 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(this.credenciais)
       .subscribe((response: any) => {
         this.authService.successfullLogin(response.headers.get('Authorization'));
-
-        this.toasty.success('Login efetuado com Sucesso!');
         this.router.navigate(['/produto']);
       },
       (error: HttpErrorResponse) => {

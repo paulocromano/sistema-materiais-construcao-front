@@ -9,14 +9,14 @@
             </ul>
         </nav>
         
-        <a (click)="abrirDialogPerfil()" *ngIf="usuarioEstaLogado">
+        <a *ngIf="usuarioEstaLogado" (click)="abrirDialogPerfil()">
             <button class="button-dashboard" style="background-color: darkslategrey">
                 <i class="fas fa-user-circle mr-1"></i>
                 Perfil
             </button>
         </a>
 
-        <a class="loginButton" *ngIf="usuarioEstaLogado" (click)="logout()">
+        <a *ngIf="usuarioEstaLogado" class="loginButton" (click)="logout()">
             <button class="button-dashboard">
                 <i class="fas fa-sign-out-alt mr-1"></i>
                 Logout

@@ -2,10 +2,75 @@
 
 <div class="container-border">
     <p-tabView>
-        <p-tabPanel [header]="'Compras'">
+        <p-tabPanel [header]="(temPermissaoDeADMIN) ? 'Suas Compras' : 'Compras'">
 
             <div class="borda-table">
-                <p-table #table [rows]="5" [paginator]="true" [value]="compras" [columns]="tabView">
+                <p-table #table [rows]="5" [paginator]="true" [value]="comprasClienteLogado" [columns]="tabView">
+
+                    <!-- Parte superior da Tabela -->
+                    <ng-template pTemplate="caption">
+                        <div class="row">
+                            <div class="col-8 text-left">
+                                <input type="text" pInputText size="50" placeholder="Pesquisar" [(ngModel)]="pesquisa"
+                                    (input)="table.filterGlobal($event.target.value, 'contains')">
+                                <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
+                            </div>
+
+                            <div class="col-4 text-right">
+                                <div>Compras Efetuadas: {{ (comprasClienteLogado) ? comprasClienteLogado.length : 0 }}</div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <!-- Headers da Tabela -->
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngClass]="col.style" [pSortableColumn]="col.field" class="px-0 px-1 text-center">
+                                {{ col.header }}
+
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Body da Tabela -->
+                    <ng-template pTemplate="body" let-compra let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns" class="text-center">
+                                {{ (compra[col.field]?.descricao) ? compra[col.field].descricao : compra[col.field] }}
+
+                                <div *ngIf="col.field === 'total'">
+                                    {{ (compra.preco * compra.quantidade).toFixed(2) }}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Caso não haja Clientes -->
+                    <ng-template pTemplate="emptymessage" let-cols>
+                        <tr>
+                            <td [attr.colspan]="cols.length" *ngIf="!this.processandoOperacao" class="text-center">
+                                Nenhuma Compra encontrada!
+                            </td>
+
+                            <td class="text-center" [attr.colspan]="cols.length" *ngIf="this.processandoOperacao">
+                                <p-progressSpinner [strokeWidth]="3"></p-progressSpinner>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <!-- Parte inferior da tabela -->
+                    <ng-template pTemplate="summary">
+                        <div class="text-center">Valor Total das Compras R$: {{ totalEmCompras.toFixed(2) }}</div>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+
+        <p-tabPanel *ngIf="temPermissaoDeADMIN"  [header]="'Compras dos Clientes'">
+
+            <div class="borda-table">
+                <p-table #table [rows]="5" [paginator]="true" [value]="comprasClientes" [columns]="tabView">
 
                     <!-- Parte superior da Tabela -->
                     <ng-template pTemplate="caption">
@@ -57,7 +122,7 @@
 
                     <!-- Parte inferior da tabela -->
                     <ng-template pTemplate="summary">
-                        <div class="text-center">Compras Efetuadas: {{ (compras) ? compras.length : 0 }}</div>
+                        <div class="text-center">Compras Efetuadas: {{ (comprasClientes) ? comprasClientes.length : 0 }}</div>
                     </ng-template>
                 </p-table>
             </div>

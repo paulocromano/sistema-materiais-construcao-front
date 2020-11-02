@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ToastyComponent } from '../shared/toasty/toasty.component';
 import { ProdutoDTO } from './shared/model/produto.dto';
@@ -8,6 +9,7 @@ import { AtualizarProdutoFORM } from './shared/model/atualizar-produto.form';
 import { ProdutoFORM } from './shared/model/produto.form';
 import { CompraService } from './../compra/shared/service/compra.service';
 import { CompraFORM } from './../compra/shared/model/compra.form';
+import { TokenService } from './../shared/service/token.service';
 
 @Component({
   selector: 'app-produto',
@@ -25,6 +27,7 @@ export class ProdutoComponent implements OnInit {
   public mostrarDialogRemoverProduto: boolean = false;
   public mostrarDialogCadastroProduto: boolean = false;
   public mostrarDialogCompraProduto: boolean = false;
+  public clienteLogadoisADMIN: boolean = false;
 
   public produtos: ProdutoDTO[];
   public produtoParaAtualizar = new AtualizarProdutoFORM(new ProdutoDTO);
@@ -42,12 +45,15 @@ export class ProdutoComponent implements OnInit {
   ];
 
   constructor(
+    private tokenService: TokenService,
     private produtoService: ProdutoService,
-    private compraService: CompraService
+    private compraService: CompraService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.listarTodosProdutos();
+    this.clienteLogadoisADMIN = this.tokenService.temPermissaoDeADMIN();
   }
 
 
@@ -58,12 +64,12 @@ export class ProdutoComponent implements OnInit {
       .subscribe(
         (produto: ProdutoDTO[]) => {
           this.produtos = produto;
+          this.processandoOperacao = false;
         },
         (error: HttpErrorResponse) => {
+          this.processandoOperacao = false;
           this.toasty.error(error);
-        },
-        () => this.processandoOperacao = false
-      )
+        });
   }
 
   public abrirDialogParaAtualizarProduto(produto: ProdutoDTO): void {
@@ -80,13 +86,13 @@ export class ProdutoComponent implements OnInit {
         (success: any) => {
           this.toasty.success('Produto atualizado com sucesso!');
           this.mostrarDialogAtualizacaoProduto = false;
+          this.processandoOperacao = false;
           this.listarTodosProdutos();  
         },
         (error: HttpErrorResponse) => {
+          this.processandoOperacao = false;
           this.toasty.error(error);
-        },
-        () => this.processandoOperacao
-      )
+        });
   } 
 
   public camposAtualizacaoProdutoEstaoValidos(): boolean {
@@ -106,13 +112,13 @@ export class ProdutoComponent implements OnInit {
         (success: any) => {
           this.toasty.success('Produto removido com sucesso!');
           this.mostrarDialogRemoverProduto = false;
+          this.processandoOperacao = false;
           this.listarTodosProdutos();
         },
         (error: HttpErrorResponse) => {
+          this.processandoOperacao = false;
           this.toasty.error(error);
-        },
-        () => this.processandoOperacao = false
-      );
+        });
   }
 
   public cadastrarProduto(): void {
@@ -123,13 +129,13 @@ export class ProdutoComponent implements OnInit {
         (success: any) => {
           this.toasty.success('Produto cadastrado com sucesso!');
           this.mostrarDialogCadastroProduto = false;
+          this.processandoOperacao = false;
           this.listarTodosProdutos();
         },
         (error: HttpErrorResponse) => {
+          this.processandoOperacao = false;
           this.toasty.error(error);
-        },
-        () => this.processandoOperacao = false
-      );
+        });
 
       this.novoProduto = new ProdutoFORM();
   }
@@ -157,18 +163,20 @@ export class ProdutoComponent implements OnInit {
     this.compraService.comprarProduto(this.produtoSelecionado.id, this.novaCompra)
       .subscribe(
         (success: any) => {
-          this.toasty.success('Compra realizada com sucesso!');
+          this.mostrarDialogCompraProduto = false;
+          this.processandoOperacao = false;
+          this.router.navigate(['/compra']);
         },
         (error: HttpErrorResponse) => {
+          this.processandoOperacao = false;
+
           if (error.status === 422) {
             this.toasty.mostrarErrosDeValidacoes(error);
           }
           else {
-            this.toasty.error('Erro ao comprar Produto!');
+            this.toasty.error(error);
           } 
-        },
-        () => this.processandoOperacao = false
-      );
+        });
 
       this.novaCompra = new CompraFORM();
   }

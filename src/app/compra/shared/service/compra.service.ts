@@ -21,6 +21,10 @@ export class CompraService {
     return this.http.get<CompraDTO[]>(`${API_CONFIG.baseUrl}/compra/cliente-listar`);
   }
 
+  public getTotalComprasCliente(): Observable<number> {
+    return this.http.get<number>(`${API_CONFIG.baseUrl}/compra/total-compra-cliente`);
+  }
+
   public comprarProduto(idProduto: number, compra: CompraFORM): Observable<any> {
     return this.http.post(`${API_CONFIG.baseUrl}/compra/${idProduto}`, compra);
   }

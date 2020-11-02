@@ -19,7 +19,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (this.storage.getLocalUser()) {
             token = this.storage.getLocalUser().token;
-            console.log('token: ', token)
 
             requestRetorno = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + token)
