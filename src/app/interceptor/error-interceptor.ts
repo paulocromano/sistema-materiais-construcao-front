@@ -14,10 +14,12 @@ export class ErrorInterceptor implements HttpInterceptor {
         ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let token: string = this.storage.getLocalUser().token;
+        let token: string;
         let requestRetorno: HttpRequest<any>;
 
-        if (token) {
+        if (this.storage.getLocalUser()) {
+            token = this.storage.getLocalUser().token;
+
             requestRetorno = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + token)
             });

@@ -1,14 +1,14 @@
 <body>
     <header>
-        <label class="logo">MATERIAL DE CONSTRUÇÃO</label>
+        <a class="logo" [routerLink]="['']">MATERIAL DE CONSTRUÇÃO</a>
         <nav *ngIf="usuarioEstaLogado">
             <ul class="navLink">
-                <li><a href="#">Produto</a></li>
-                <li><a href="#">Compra</a></li>
-                <li><a href="#">Clientes</a></li>
-                <li><a href="#">Perfil</a></li>
+                <li><a [routerLink]="['/produto']">Produto</a></li>
+                <li><a [routerLink]="['/compra']">Compra</a></li>
+                <li><a [routerLink]="['/cliente']">Clientes</a></li>
+                <li><a [routerLink]="['']">Perfil</a></li>
             </ul>
         </nav>
-        <a class="loginButton" href="#"><button>{{ (usuarioEstaLogado) ? 'Logout' : 'Login' }}</button></a>
+        <a class="loginButton" *ngIf="usuarioEstaLogado" (click)="logout()"><button>Logout</button></a>
     </header>
 </body>

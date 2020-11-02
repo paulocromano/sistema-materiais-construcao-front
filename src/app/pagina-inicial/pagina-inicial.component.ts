@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from './../shared/service/auth.service';
 
 @Component({
   selector: 'app-pagina-inicial',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaginaInicialComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  public acessarSite(): void {
+    if (this.authService.usuarioEstaLogado()) {
+      this.router.navigate(['/produto']);
+    }
+    else {
+      this.router.navigate(['/login']);
+    }
   }
-
 }

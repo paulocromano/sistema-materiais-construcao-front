@@ -1,0 +1,23 @@
+.container-border {
+    border: 2px solid rgba(148, 142, 142, 0.774);
+    border-radius: 2px;
+    margin: 4rem 1rem;
+}
+
+.borda-table {
+    border: 2px solid rgba(209, 209, 209, 0.774);
+    border-radius: 2px;
+}
+
+/* Colunas da Tabela */
+.col-id {
+    width: 10%;
+}
+
+.col-produto {
+    width: 40%;
+}
+
+.col-quantidade {
+    width: 15%;
+}

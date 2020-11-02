@@ -40,16 +40,15 @@ export class LoginComponent implements OnInit {
         this.authService.successfullLogin(response.headers.get('Authorization'));
 
         this.toasty.success('Login efetuado com Sucesso!');
-        this.router.navigate(['/produto'])
-        this.processandoOperacao = false;
+        this.router.navigate(['/produto']);
       },
       (error: HttpErrorResponse) => {
-        console.log(error)
         this.toasty.error(error);
-        this.processandoOperacao = false;
-      });
+      },
+      () => this.processandoOperacao = false
+      );
 
-      this.credenciais = new CredenciaisDTO();
+      //this.credenciais = new CredenciaisDTO();
   }
 
   public validacoesCamposLogin(): boolean {
