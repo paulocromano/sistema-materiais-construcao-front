@@ -35,6 +35,7 @@ export class AuthService {
 
     public logout(): void {
         this.storageService.setLocalUser(null);
+        this.usuarioAutenticado = false;
     }
 
     public usuarioEstaLogado(): boolean {

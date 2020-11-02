@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 
 import { DashboardComponent } from './dashboard.component';
+import { PerfilModule } from './../perfil/perfil.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { DashboardComponent } from './dashboard.component';
   imports: [
     CommonModule,
     MenubarModule,
-    RouterModule
+    RouterModule,
+    PerfilModule
   ],
   exports: [ DashboardComponent ]
 })

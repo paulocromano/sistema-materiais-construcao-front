@@ -3,12 +3,16 @@
         <a class="logo" [routerLink]="['']">MATERIAL DE CONSTRUÇÃO</a>
         <nav *ngIf="usuarioEstaLogado">
             <ul class="navLink">
-                <li><a [routerLink]="['/produto']">Produto</a></li>
-                <li><a [routerLink]="['/compra']">Compra</a></li>
-                <li><a [routerLink]="['/cliente']">Clientes</a></li>
-                <li><a [routerLink]="['']">Perfil</a></li>
+                <li><a [routerLink]="['/produto']">Produtos</a></li>
+                <li><a [routerLink]="['/compra']">Compras</a></li>
+                <li><a *ngIf="usuarioTemPermissaoDeADMIN" [routerLink]="['/cliente']">Clientes</a></li>
+                <li><a (click)="abrirDialogPerfil()">
+                    <button style="background-color: darkslategrey">Perfil</button></a>
+                </li>
             </ul>
         </nav>
         <a class="loginButton" *ngIf="usuarioEstaLogado" (click)="logout()"><button>Logout</button></a>
     </header>
 </body>
+
+<app-perfil [abrirDialogPerfilCliente]="abrirDialogPerfilCliente"></app-perfil>

@@ -43,17 +43,16 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/produto']);
       },
       (error: HttpErrorResponse) => {
-        this.toasty.error(error);
-      },
-      () => this.processandoOperacao = false
-      );
+        this.processandoOperacao = false;
+        this.toasty.error(JSON.parse(error.error).message);
+      });
 
-      //this.credenciais = new CredenciaisDTO();
+      this.credenciais = new CredenciaisDTO();
   }
 
-  public validacoesCamposLogin(): boolean {
+  /*public validacoesCamposLogin(): boolean {
     return !(this.credenciais.email && this.credenciais.senha);
-  }
+  }*/
 
   public cadastroUsuario(): void {
     this.processandoOperacao = true;
@@ -61,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.clienteService.cadastrarUsuario(this.cadastro)
       .subscribe(
         (success: any) => {
-          this.toasty.success(`usuario cadastrado com sucesso!`);
+          this.toasty.success(`Usuario cadastrado com sucesso!`);
           this.processandoOperacao = false;
         },
         (error: HttpErrorResponse) => {

@@ -21,6 +21,10 @@ export class ClienteService {
       .pipe(tap(console.log));
   }
 
+  public buscarClienteLogado(id: number): Observable<ClienteDTO> {
+    return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/cliente/${id}`);
+  }
+
   public cadastrarUsuario(dadosNovoUsuario: ClienteFORM): Observable<any> {
     return this.http.post(`${API_CONFIG.baseUrl}/cliente`, dadosNovoUsuario);
   }

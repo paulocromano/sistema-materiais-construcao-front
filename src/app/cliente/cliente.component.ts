@@ -5,6 +5,8 @@ import { ToastyComponent } from './../shared/toasty/toasty.component';
 import { ClienteDTO } from './shared/model/cliente.dto';
 import { ClienteService } from './shared/service/cliente.service';
 import { ClienteFORM } from './shared/model/cliente.form';
+import { TokenService } from './../shared/service/token.service';
+import { PermissaoCliente } from './../shared/model/permissao-cliente';
 
 @Component({
   selector: 'app-cliente',
@@ -47,11 +49,17 @@ export class ClienteComponent implements OnInit {
   ];
 
   constructor(
+    private tokenService: TokenService,
     private clienteService: ClienteService
   ) { }
 
   ngOnInit(): void {
-    this.listarTodosClientes();
+    if (this.tokenService.temPermissao(PermissaoCliente.ADMIN)) {
+      this.listarTodosClientes();
+    }
+    else {
+      this.toasty.error('Acesso Negado!');
+    }
   }
 
   public listarTodosClientes(): void {
@@ -119,13 +127,13 @@ export class ClienteComponent implements OnInit {
         (success: any) => {
           this.toasty.success(`O(A) Cliente ${this.clienteSelecionado.nome} agora tem permissão de ADMINISTRADOR!`)
           this.mostrarDialogParaAdicionarPermissao = false;
+          this.processandoOperacao = false
           this.listarTodosClientes();
         },
         (error: HttpErrorResponse) => {
+          this.processandoOperacao = false;
           this.toasty.error(error);
-        },
-        () => this.processandoOperacao = false
-      );
+        });
   }
 
   public abrirDialogRemoverCliente(cliente: ClienteDTO): void {

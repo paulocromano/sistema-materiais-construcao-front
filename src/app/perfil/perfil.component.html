@@ -1,0 +1,55 @@
+<p-dialog [(visible)]="abrirDialogPerfilCliente" [draggable]="false" [resizable]="false" 
+    [blockScroll]="true" [closable]="false" [style]="{width: '90vh'}">
+
+    <p-header>
+        Perfil de <b>{{ cliente.nome }}</b>
+    </p-header>
+
+    <div>
+        <div class="row mt-2">
+            <div class="col-3">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">ID</span>
+                    <input type="text" [value]="cliente.id" pInputText [disabled]="true">         
+                </div>
+            </div>
+
+            <div class="col-9">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Nome</span>
+                    <input type="text" [value]="cliente.nome" pInputText [disabled]="true">         
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-7">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Data de Nascimento</span>
+                    <input type="text" [value]="cliente.dataNascimento" pInputText [disabled]="true">         
+                </div>
+            </div>
+
+            <div class="col-5">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Telefone</span>
+                    <input type="text" [value]="cliente.telefone" pInputText [disabled]="true">         
+                </div>
+            </div>
+        </div>
+
+        <div class="p-inputgroup mt-2">
+            <span class="p-inputgroup-addon">Email</span>
+            <input type="text" [value]="cliente.email" pInputText [disabled]="true">         
+        </div>
+    </div>
+
+    <p-footer>
+        <button class="btn btn-danger" (click)="abrirDialogPerfilCliente = false">
+            <i class="fas fa-arrow-circle-left"></i>
+            Voltar
+        </button>
+    </p-footer>
+</p-dialog>
+
+<app-toasty #toastyComponent></app-toasty>

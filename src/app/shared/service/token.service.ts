@@ -11,16 +11,23 @@ export class TokenService {
 
   private jwtHelper = new JwtHelperService();
   private token: string;
+  private tokenDecodificado: any;
 
   constructor(private storage: StorageService) { 
-    this.token = this.storage.getLocalUser().token;
-  }
-
-  private decodificarToken(): any {
-    return this.jwtHelper.decodeToken(this.token);
+    if (this.storage.getLocalUser()) {
+      this.token = this.storage.getLocalUser().token;
+      this.tokenDecodificado = this.jwtHelper.decodeToken(this.token);
+    }
+    else {
+      this.token = null;
+    }
   }
 
   public temPermissao(permissao: string): boolean {
-    return this.token && this.decodificarToken().permissoes.includes(permissao);
+    return this.token && this.tokenDecodificado.permissoes.includes(permissao);
+  }
+
+  public getIDCliente(): number {
+    return this.token && this.tokenDecodificado.id;
   }
 }
