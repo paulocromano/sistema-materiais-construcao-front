@@ -6,7 +6,6 @@ import { ClienteDTO } from './shared/model/cliente.dto';
 import { ClienteService } from './shared/service/cliente.service';
 import { ClienteFORM } from './shared/model/cliente.form';
 import { TokenService } from './../shared/service/token.service';
-import { PermissaoCliente } from './../shared/model/permissao-cliente';
 
 @Component({
   selector: 'app-cliente',
@@ -54,7 +53,7 @@ export class ClienteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.tokenService.temPermissao(PermissaoCliente.ADMIN)) {
+    if (this.tokenService.temPermissaoDeADMIN()) {
       this.listarTodosClientes();
     }
     else {

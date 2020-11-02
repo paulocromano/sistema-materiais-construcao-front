@@ -1,4 +1,4 @@
 export enum PermissaoCliente {
-    ADMIN = "ADMIN",
-    CLIENTE = "CLIENTE"
+    ADMIN = "[ROLE_ADMIN]",
+    CLIENTE = "[ROLE_CLIENTE]"
 }

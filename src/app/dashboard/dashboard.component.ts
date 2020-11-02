@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { AuthService } from './../shared/service/auth.service';
 import { TokenService } from './../shared/service/token.service';
-import { PermissaoCliente } from './../shared/model/permissao-cliente';
 import { ClienteDTO } from './../cliente/shared/model/cliente.dto';
 import { ClienteService } from './../cliente/shared/service/cliente.service';
 import { ToastyComponent } from './../shared/toasty/toasty.component';
@@ -36,7 +35,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuarioEstaLogado = this.authService.usuarioEstaLogado();
-    this.usuarioTemPermissaoDeADMIN = this.tokenService.temPermissao(PermissaoCliente.ADMIN)
+
+    if (this.usuarioEstaLogado) {
+      this.usuarioTemPermissaoDeADMIN = this.tokenService.temPermissaoDeADMIN();
+    }
   }
 
   public logout(): void {

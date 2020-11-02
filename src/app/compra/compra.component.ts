@@ -1,4 +1,3 @@
-import { PermissaoCliente } from './../shared/model/permissao-cliente';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -44,7 +43,7 @@ export class CompraComponent implements OnInit {
   public listarCompras(): void {
     this.processandoOperacao = true;
 
-    if (this.tokenService.temPermissao(PermissaoCliente.ADMIN)) {
+    if (this.tokenService.temPermissaoDeADMIN()) {
       this.listarTodasCompras();
     }
     else {

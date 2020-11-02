@@ -18,7 +18,7 @@ export class PaginaInicialComponent implements OnInit {
   ngOnInit(): void { }
 
   public acessarSite(): void {
-    console.log(this.authService.usuarioEstaLogado())
+    console.log('Esta logado: ', this.authService.usuarioEstaLogado())
     if (this.authService.usuarioEstaLogado()) {
       this.router.navigate(['/produto']);
     }

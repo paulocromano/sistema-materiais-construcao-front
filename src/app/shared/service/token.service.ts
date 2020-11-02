@@ -1,3 +1,4 @@
+import { PermissaoCliente } from './../model/permissao-cliente';
 import { Injectable } from '@angular/core';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -14,6 +15,10 @@ export class TokenService {
   private tokenDecodificado: any;
 
   constructor(private storage: StorageService) { 
+    this.atualizaToken();
+  }
+
+  private atualizaToken(): void {
     if (this.storage.getLocalUser()) {
       this.token = this.storage.getLocalUser().token;
       this.tokenDecodificado = this.jwtHelper.decodeToken(this.token);
@@ -23,8 +28,11 @@ export class TokenService {
     }
   }
 
-  public temPermissao(permissao: string): boolean {
-    return this.token && this.tokenDecodificado.permissoes.includes(permissao);
+  public temPermissaoDeADMIN(): boolean {
+    this.atualizaToken();
+    let isADMIN = this.tokenDecodificado.permissoes === PermissaoCliente.ADMIN;
+    
+    return (this.token && isADMIN);
   }
 
   public getIDCliente(): number {
