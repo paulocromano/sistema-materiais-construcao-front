@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
-*{
+.links {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-   /* background-color: #24252A;*/
 }
 
-li, a, button, label{
+li, a, .button-dashboard, label{
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 16px;
@@ -57,7 +56,7 @@ header{
     color: #0088a9;
 }
 
-button{
+.button-dashboard {
     margin-left: 20px;
     padding: 9px 25px;
     background-color: rgba(0, 136, 169, 1);
@@ -68,7 +67,7 @@ button{
     color: #edf0f1;
 }
 
-button:hover{
+.button-dashboard:hover{
     background-color: rgba(0, 136, 169, 0.8);
 }
 

@@ -19,7 +19,6 @@ import { ClienteModule } from './cliente/cliente.module';
 import { TokenService } from './shared/service/token.service';
 import { CompraModule } from './compra/compra.module';
 import { PaginaInicialModule } from './pagina-inicial/pagina-inicial.module';
-import { PerfilModule } from './perfil/perfil.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { PerfilModule } from './perfil/perfil.module';
     ClienteModule,
     CompraModule,
     PaginaInicialModule,
-    PerfilModule,
     JwtModule
   ],
   providers: [

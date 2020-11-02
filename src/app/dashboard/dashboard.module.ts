@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MenubarModule } from 'primeng/menubar';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { DashboardComponent } from './dashboard.component';
-import { PerfilModule } from './../perfil/perfil.module';
+import { ToastyModule } from '../shared/toasty/toasty.module';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,10 @@ import { PerfilModule } from './../perfil/perfil.module';
   imports: [
     CommonModule,
     MenubarModule,
+    DialogModule,
+    InputTextModule,
     RouterModule,
-    PerfilModule
+    ToastyModule
   ],
   exports: [ DashboardComponent ]
 })
