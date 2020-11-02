@@ -68,7 +68,7 @@
             <div class="col-6">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon">Telefone</span>
-                    <input type="text" [value]="cliente.telefone" pInputText [disabled]="true">         
+                    <input class="text-center" type="text" [value]="(cliente.telefone) ? cliente.telefone : '---'" pInputText [disabled]="true">         
                 </div>
             </div>
         </div>

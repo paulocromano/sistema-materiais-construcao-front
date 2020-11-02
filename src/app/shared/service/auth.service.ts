@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { API_CONFIG } from './../../config/api.condig';
-import { CredenciaisDTO } from '../../login/shared/model/credenciais.dto';
 import { LocalUser } from './../model/localUser';
 import { StorageService } from './storage.service';
+import { CredenciaisDTO } from './../../acesso/login/shared/model/credenciais.dto';
 
 @Injectable()
 export class AuthService {

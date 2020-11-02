@@ -1,13 +1,12 @@
-import { ClienteService } from './../cliente/shared/service/cliente.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { CredenciaisDTO } from './shared/model/credenciais.dto';
-import { AuthService } from './../shared/service/auth.service';
-import { ToastyComponent } from './../shared/toasty/toasty.component';
-import { ClienteFORM } from '../cliente/shared/model/cliente.form';
-
+import { ClienteService } from './../../cliente/shared/service/cliente.service';
+import { AuthService } from './../../shared/service/auth.service';
+import { ClienteFORM } from './../../cliente/shared/model/cliente.form';
+import { ToastyComponent } from './../../shared/toasty/toasty.component';
 
 @Component({
   selector: 'app-login',
@@ -42,7 +41,13 @@ export class LoginComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         this.processandoOperacao = false;
-        this.toasty.error(JSON.parse(error.error).message);
+
+        if (error.status === 401) {
+          this.toasty.error(JSON.parse(error.error).message);
+        }
+        else {
+          this.toasty.error('Não foi possível efetuar o Login! Tente novamente.')
+        }
       });
 
       this.credenciais = new CredenciaisDTO();

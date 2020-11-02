@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 
 import { JwtModule } from "@auth0/angular-jwt";
 
-import { LoginModule } from './login/login.module';
+import { AcessoModule } from './acesso/acesso.module';
 import { AuthService } from './shared/service/auth.service';
 import { StorageService } from './shared/service/storage.service';
 import { ErrorInterceptorProvider } from './interceptor/error-interceptor';
@@ -29,7 +29,7 @@ import { PaginaInicialModule } from './pagina-inicial/pagina-inicial.module';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    LoginModule,
+    AcessoModule,
     ProdutoModule,
     DashboardModule,
     ClienteModule,
