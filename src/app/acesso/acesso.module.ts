@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -17,8 +18,8 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     CommonModule,
-    CommonModule,
     FormsModule,
+    RouterModule,
     InputTextModule,
     ToastyModule,
     DashboardModule

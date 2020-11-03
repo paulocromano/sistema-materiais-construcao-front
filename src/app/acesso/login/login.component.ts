@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   public toasty: ToastyComponent;
 
   public credenciais = new CredenciaisDTO();
-  public cadastro = new ClienteFORM();
   public processandoOperacao: boolean = false;
 
   constructor(
@@ -56,31 +55,4 @@ export class LoginComponent implements OnInit {
   /*public validacoesCamposLogin(): boolean {
     return !(this.credenciais.email && this.credenciais.senha);
   }*/
-
-  public cadastroUsuario(): void {
-    this.processandoOperacao = true;
-
-    this.clienteService.cadastrarUsuario(this.cadastro)
-      .subscribe(
-        (success: any) => {
-          this.toasty.success(`Usuario cadastrado com sucesso!`);
-          this.processandoOperacao = false;
-        },
-        (error: HttpErrorResponse) => {
-          if (error.status === 422) {
-            this.toasty.mostrarErrosDeValidacoes(error);
-          }
-          else {
-            this.toasty.error('Houve um erro ao efetuar o Cadastro!')
-          }
-
-          this.processandoOperacao = false;
-      });
-
-    this.cadastro = new ClienteFORM();
-  }
-
-  public validacoesCamposCadastro(): boolean {
-    return !(this.cadastro.nome && this.cadastro.dataNascimento && this.cadastro.email && this.cadastro.senha);
-  }
 }

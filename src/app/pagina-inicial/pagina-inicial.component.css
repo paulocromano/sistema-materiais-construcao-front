@@ -3,15 +3,17 @@
 *{
     padding: 0;
     margin: 0;
+    
 }
 
 body {
     background: linear-gradient(rgba(0, 0, 0, 0.925), rgba(0, 0, 0, 0.829)), url("./img/background.jpg");
     background-size: cover;
     height: 100vh;
+    overflow: hidden;
 }
 
-.home{
+.home {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -31,20 +33,62 @@ h1{
 }
 
 
-button{
-    animation: upAnimationButton 2.5s ease;
+.loginButton, .cadastrarButton{
+    
     margin-left: 20px;
     padding: 9px 25px;
     border: none;
-    /*border-radius: 50px;*/
     cursor: pointer;
     background: rgb(2, 32, 39);
     margin-top: 20px;
     color: #edf0f1;
     letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
-button:before{
+.loginButton{
+    animation: upAnimationButton 2.0s ease;
+}
+
+.cadastrarButton{
+    animation: AnimationButton 2.0s ease;
+}
+
+.loginButton:before{
+    content: attr(data-text);
+    position: absolute;
+    text-align: center;    
+    transition: 0.5s;
+    transform-origin: bottom;
+    transform: translateY(-124%) rotateX(90deg);
+    background: rgb(92, 94, 196);
+    padding: 9px 25px;
+    margin-left: -25px;
+
+}
+
+.loginButton:hover:before{
+    transform: translateY(-26%) rotateX(0deg);
+}
+
+.loginButton:after{
+    content: attr(data-text);
+    position: absolute;
+    text-align: center;    
+    transition: 0.5s;
+    transform-origin: top;
+    transform: translateY(-26%) rotateX(0deg);
+    
+    background: rgb(32, 32, 116);
+    padding: 9px 25px;
+    margin-left: -118px;
+}
+
+.loginButton:hover:after{
+    transform: translateY(70%) rotateX(90deg);
+}
+
+.cadastrarButton:before{
     content: attr(data-text);
     position: absolute;
     text-align: center;    
@@ -54,14 +98,13 @@ button:before{
     background: rgb(73, 90, 95);
     padding: 9px 25px;
     margin-left: -25px;
-
 }
 
-button:hover:before{
+.cadastrarButton:hover:before{
     transform: translateY(-26%) rotateX(0deg);
 }
 
-button:after{
+.cadastrarButton:after{
     content: attr(data-text);
     position: absolute;
     text-align: center;    
@@ -70,13 +113,12 @@ button:after{
     transform: translateY(-26%) rotateX(0deg);
     background: rgb(37, 52, 56);
     padding: 9px 25px;
-    margin-left: -98px;
+    margin-left: -162px;
 }
 
-button:hover:after{
+.cadastrarButton:hover:after{
     transform: translateY(70%) rotateX(90deg);
 }
-
 
 @keyframes upAnimation{
 	0%{
@@ -97,14 +139,28 @@ button:hover:after{
 @keyframes upAnimationButton{
 	0%{
 		opacity: 0;
-		transform: translateY(100px);
+		transform: translateX(-1000px) rotate(360deg);
         text-shadow: 0 30px 25px #000;
         color: rgba(0, 0, 0, 0.829);
-
-	}
+    }
 	100%{
 		opacity: 1;
-		transform: translateY(0px);
+		transform: translate(0px) rotate(0deg);
+        text-shadow: 0 0 0 #000;
+        color: white;
+	}
+}
+
+@keyframes AnimationButton{
+	0%{
+		opacity: 0;
+		transform: translateX(1000px) rotate(360deg);
+        text-shadow: 0 30px 25px #000;
+        color: rgba(0, 0, 0, 0.829);
+    }
+	100%{
+		opacity: 1;
+		transform: translate(0px) rotate(0deg);
         text-shadow: 0 0 0 #000;
         color: white;
 	}

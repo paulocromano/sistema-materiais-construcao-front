@@ -17,13 +17,18 @@ export class PaginaInicialComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  public acessarSite(): void {
-    console.log('Esta logado: ', this.authService.usuarioEstaLogado())
-    if (this.authService.usuarioEstaLogado()) {
-      this.router.navigate(['/produto']);
+  public acessarSite(rota: number): void {
+    
+    if (rota === 0) {
+      if (this.authService.usuarioEstaLogado()) {
+        this.router.navigate(['/produto']);
+      }
+      else {
+        this.router.navigate(['/login']);
+      }
     }
-    else {
-      this.router.navigate(['/login']);
+    else if (rota === 1) {
+      this.router.navigate(['/cadastro'])
     }
   }
 }
