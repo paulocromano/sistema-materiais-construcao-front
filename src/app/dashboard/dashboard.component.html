@@ -27,59 +27,131 @@
 
 <!-- Dialog do Perfil do Cliente -->
 <p-dialog [(visible)]="abrirDialogPerfilCliente" [draggable]="false" [resizable]="false" 
-    [blockScroll]="true" [closable]="false" [style]="{width: '90vh'}">
+    [blockScroll]="true" [closable]="false" [style]="{width: '100vh'}">
 
-    <p-header>
-        Perfil de <b>{{ cliente.nome }}</b>
-    </p-header>
+    <!-- Dados do Perfil -->
+    <div class="container-border">
+        <p-tabView [activeIndex]="0">
 
-    <div>
-        <div class="row mt-2">
-            <div class="col-3">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon">ID</span>
-                    <input type="text" [value]="cliente.id" pInputText [disabled]="true">         
+            <p-tabPanel [header]="'Perfil'">  
+                <div class="borda-table">
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">ID</span>
+                                <input type="text" [value]="cliente.id" pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                
+                        <div class="col-9">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Nome</span>
+                                <input type="text" [value]="cliente.nome" pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row my-2">
+                        <div class="col-8">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Data de Nascimento</span>
+                                <input class="text-center" type="text" [value]="cliente.dataNascimento" pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="p-inputgroup mt-2">
+                        <span class="p-inputgroup-addon">Email</span>
+                        <input type="text" [value]="cliente.email" pInputText [disabled]="true">         
+                    </div>
+            
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Telefone</span>
+                                <input class="text-center" type="text" [value]="(cliente.telefone) ? cliente.telefone : '---'" 
+                                    pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right mt-3">
+                        <p-footer>
+                            <button class="btn btn-danger" (click)="abrirDialogPerfilCliente = false">
+                                <i class="fas fa-arrow-circle-left"></i>
+                                Voltar
+                            </button>
+                        </p-footer>
+                    </div>
                 </div>
-            </div>
+            </p-tabPanel>
+        
+            <!-- Aba para Atualizar Informações do Perfil -->
+            <p-tabPanel [header]="'Atualizar Informações'">        
+                 <div class="borda-table">
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">ID</span>
+                                <input type="text" [value]="cliente.id" pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                
+                        <div class="col-9">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Nome</span>
+                                <input type="text" [value]="cliente.nome" pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row my-2">
+                        <div class="col-8">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Data de Nascimento</span>
+                                <input class="text-center" type="text" [value]="cliente.dataNascimento" pInputText [disabled]="true">         
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="p-inputgroup mt-2">
+                        <span class="p-inputgroup-addon">Email</span>
+                        <input type="text" [value]="cliente.email" pInputText [disabled]="true">         
+                    </div>
+            
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Telefone</span>
+                                <input class="text-center" type="text" [(ngModel)]="atualizarCliente.telefone" pInputText>         
+                            </div>
+                        </div>
 
-            <div class="col-9">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon">Nome</span>
-                    <input type="text" [value]="cliente.nome" pInputText [disabled]="true">         
+                        <div class="col-6">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">Nova Senha</span>
+                                <input class="text-center" type="password" [(ngModel)]="atualizarCliente.senha" pInputText>         
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right mt-3">
+                        <p-footer>
+                            <button class="btn btn-danger mr-2" (click)="abrirDialogPerfilCliente = false">
+                                <i class="fas fa-arrow-circle-left"></i>
+                                Voltar
+                            </button>
+
+                            <button class="btn btn-success" (click)="atualizarPerfilCliente()" [disabled]="processandoOperacao">
+                                <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
+                                Atualizar
+                            </button>
+                        </p-footer>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row my-2">
-            <div class="col-7">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon">Data de Nascimento</span>
-                    <input type="text" [value]="cliente.dataNascimento" pInputText [disabled]="true">         
-                </div>
-            </div>
-        </div>
-
-        <div class="p-inputgroup mt-2">
-            <span class="p-inputgroup-addon">Email</span>
-            <input type="text" [value]="cliente.email" pInputText [disabled]="true">         
-        </div>
-
-        <div class="row mt-2">
-            <div class="col-6">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon">Telefone</span>
-                    <input class="text-center" type="text" [value]="(cliente.telefone) ? cliente.telefone : '---'" pInputText [disabled]="true">         
-                </div>
-            </div>
-        </div>
+            </p-tabPanel>
+        </p-tabView>
     </div>
-
-    <p-footer>
-        <button class="btn btn-danger" (click)="abrirDialogPerfilCliente = false">
-            <i class="fas fa-arrow-circle-left"></i>
-            Voltar
-        </button>
-    </p-footer>
 </p-dialog>
 
 <app-toasty #toastyComponent></app-toasty>

@@ -29,8 +29,8 @@ export class ClienteService {
     return this.http.post(`${API_CONFIG.baseUrl}/cliente`, dadosNovoUsuario);
   }
 
-  public atualizarCliente(id: number, cliente: AtualizarClienteFORM): Observable<any> {
-    return this.http.put(`${API_CONFIG.baseUrl}/cliente/${id}`, cliente);
+  public atualizarCliente(id: number, cliente: AtualizarClienteFORM): Observable<ClienteDTO> {
+    return this.http.put<ClienteDTO>(`${API_CONFIG.baseUrl}/cliente/${id}`, cliente);
   }
 
   public adicionarPermissaoParaCliente(id: number): Observable<any> {

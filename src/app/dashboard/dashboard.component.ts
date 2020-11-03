@@ -1,3 +1,4 @@
+import { AtualizarClienteFORM } from './../cliente/shared/model/atualizar-cliente.form';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -22,9 +23,10 @@ export class DashboardComponent implements OnInit {
   public usuarioEstaLogado: boolean = false;
   public usuarioTemPermissaoDeADMIN: boolean = false;
   public abrirDialogPerfilCliente: boolean = false;
+  public processandoOperacao: boolean = false;
 
   public cliente = new ClienteDTO();
-  public processandooOperacao: boolean = false; 
+  public atualizarCliente = new AtualizarClienteFORM();
 
   constructor(
     private authService: AuthService,
@@ -48,26 +50,50 @@ export class DashboardComponent implements OnInit {
 
   public abrirDialogPerfil(): void {
     if (this.usuarioEstaLogado) {
-      this.abrirDialogPerfilCliente = true;
       this.carregarInformacoesDoClienteLogado();
+      this.abrirDialogPerfilCliente = true;
     }
   }
 
-  public carregarInformacoesDoClienteLogado(): void {
+  private carregarInformacoesDoClienteLogado(): void {
     if (this.authService.usuarioEstaLogado()) {
-      this.processandooOperacao = true;
-      console.log(this.tokenService.getIDCliente());
+      this.processandoOperacao = true;
 
       this.clienteService.buscarClienteLogado(this.tokenService.getIDCliente())
         .subscribe(
           (cliente: ClienteDTO) => {
             this.cliente = cliente;
+            this.atualizarCliente = new AtualizarClienteFORM(cliente.telefone);
+            this.processandoOperacao = false;
           },
           (error: HttpErrorResponse) => {
             this.toasty.error(error);
-          },
-          () => this.processandooOperacao = false
-        );
+            this.processandoOperacao = false;
+          });
     }
+  }
+
+  public atualizarPerfilCliente(): void {
+    this.processandoOperacao = true;
+
+    this.clienteService.atualizarCliente(this.tokenService.getIDCliente(), this.atualizarCliente)
+      .subscribe(
+        (cliente: ClienteDTO) => {
+          this.cliente = cliente;
+          this.atualizarCliente = new AtualizarClienteFORM(cliente.telefone);
+          this.toasty.success('Informações atualizadas com sucesso!');
+          this.processandoOperacao = false;
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 422) {
+            this.toasty.mostrarErrosDeValidacoes(error);
+          }
+          else {
+            this.toasty.error(error);
+          }
+      
+          this.processandoOperacao = false;
+        }
+      );
   }
 }
