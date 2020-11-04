@@ -16,7 +16,7 @@
                                 <i class="fas fa-search fa-1x ml-1" style="margin-top: auto; margin-bottom: auto;"></i>
                             </div>
     
-                            <div class="col-4 text-right">
+                            <div *ngIf="clienteLogadoisADMIN" class="col-4 text-right">
                                 <button class="btn btn-success px-5" (click)="mostrarDialogCadastroProduto = true">
                                     <i class="fas fa-plus"></i>
                                     Cadastrar Produto

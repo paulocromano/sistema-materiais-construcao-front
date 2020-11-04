@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   public usuarioTemPermissaoDeADMIN: boolean = false;
   public abrirDialogPerfilCliente: boolean = false;
   public processandoOperacao: boolean = false;
+  public indexTabViewPerfil: number = 0;
 
   public cliente = new ClienteDTO();
   public atualizarCliente = new AtualizarClienteFORM();
@@ -83,6 +84,7 @@ export class DashboardComponent implements OnInit {
           this.atualizarCliente = new AtualizarClienteFORM(cliente.telefone);
           this.toasty.success('Informações atualizadas com sucesso!');
           this.processandoOperacao = false;
+          this.indexTabViewPerfil = 0;
         },
         (error: HttpErrorResponse) => {
           if (error.status === 422) {
@@ -95,5 +97,13 @@ export class DashboardComponent implements OnInit {
           this.processandoOperacao = false;
         }
       );
+  }
+
+  public camposAtualizacaoPerfilEstaoValidos(): boolean {
+    return !(this.atualizarCliente.telefone && this.atualizarCliente.senha);
+  }
+
+  public handleChange(event): void {
+    this.indexTabViewPerfil = event.index;
   }
 }

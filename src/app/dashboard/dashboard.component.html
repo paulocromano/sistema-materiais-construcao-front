@@ -1,6 +1,6 @@
 <body>
     <header>
-        <a class="logo" [routerLink]="['']">MATERIAL DE CONSTRUÇÃO</a>
+        <a class="logo" [routerLink]="['']">MATERIAIS DE CONSTRUÇÃO</a>
         <nav *ngIf="usuarioEstaLogado">
             <ul class="navLink links">
                 <li><a [routerLink]="['/produto']">Produtos</a></li>
@@ -31,7 +31,7 @@
 
     <!-- Dados do Perfil -->
     <div class="container-border">
-        <p-tabView [activeIndex]="0">
+        <p-tabView [activeIndex]="indexTabViewPerfil" (onChange)="handleChange($event)">
 
             <p-tabPanel [header]="'Perfil'">  
                 <div class="borda-table">
@@ -142,7 +142,8 @@
                                 Voltar
                             </button>
 
-                            <button class="btn btn-success" (click)="atualizarPerfilCliente()" [disabled]="processandoOperacao">
+                            <button class="btn btn-success" (click)="atualizarPerfilCliente()" 
+                                [disabled]="camposAtualizacaoPerfilEstaoValidos() || processandoOperacao">
                                 <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-check-circle'"></i>
                                 Atualizar
                             </button>

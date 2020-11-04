@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(this.credenciais)
       .subscribe((response: any) => {
         this.authService.successfullLogin(response.headers.get('Authorization'));
+        this.processandoOperacao = false;
         this.router.navigate(['/produto']);
       },
       (error: HttpErrorResponse) => {

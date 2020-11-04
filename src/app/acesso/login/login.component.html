@@ -21,6 +21,7 @@
                 </button>
                 
                 <button class="btn btn-success px-5" (click)="login()" [disabled]="processandoOperacao">
+                    <i class="fas " [ngClass]="processandoOperacao ? 'fa-spin fa-circle-notch' : 'fa-sign-in-alt'"></i>
                     Entrar
                 </button>
             </div>

@@ -30,7 +30,9 @@ export class TokenService {
 
   public temPermissaoDeADMIN(): boolean {
     this.atualizaToken();
-    let isADMIN = this.tokenDecodificado.permissoes === PermissaoCliente.ADMIN;
+    
+    let permissao: string = this.tokenDecodificado.permissoes.split(', ')[0];
+    let isADMIN: boolean = (permissao === PermissaoCliente.ADMIN || permissao.concat(']') === PermissaoCliente.ADMIN) ? true : false;
     
     return (this.token && isADMIN);
   }
