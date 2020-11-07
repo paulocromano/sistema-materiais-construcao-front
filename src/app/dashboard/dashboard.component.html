@@ -29,9 +29,13 @@
 <p-dialog [(visible)]="abrirDialogPerfilCliente" [draggable]="false" [resizable]="false" 
     [blockScroll]="true" [closable]="false" [style]="{width: '100vh'}">
 
+    <div class="text-center py-5" *ngIf="carregandoInformacoesPerfil">
+        <p-progressSpinner [strokeWidth]="3"></p-progressSpinner>
+    </div>
+
     <!-- Dados do Perfil -->
     <div class="container-border">
-        <p-tabView [activeIndex]="indexTabViewPerfil" (onChange)="handleChange($event)">
+        <p-tabView [activeIndex]="indexTabViewPerfil" (onChange)="handleChange($event)" *ngIf="!carregandoInformacoesPerfil">
 
             <p-tabPanel [header]="'Perfil'">  
                 <div class="borda-table">

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { MessageModule } from 'primeng/message';
 
 import { ToastyModule } from '../shared/toasty/toasty.module';
 import { DashboardModule } from './../dashboard/dashboard.module';
@@ -21,6 +22,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     RouterModule,
     InputTextModule,
+    MessageModule,
     ToastyModule,
     DashboardModule
   ]

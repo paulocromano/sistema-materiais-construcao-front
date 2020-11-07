@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   public usuarioTemPermissaoDeADMIN: boolean = false;
   public abrirDialogPerfilCliente: boolean = false;
   public processandoOperacao: boolean = false;
+  public carregandoInformacoesPerfil: boolean = false;
   public indexTabViewPerfil: number = 0;
 
   public cliente = new ClienteDTO();
@@ -58,6 +59,7 @@ export class DashboardComponent implements OnInit {
 
   private carregarInformacoesDoClienteLogado(): void {
     if (this.authService.usuarioEstaLogado()) {
+      this.carregandoInformacoesPerfil = true;
       this.processandoOperacao = true;
 
       this.clienteService.buscarClienteLogado(this.tokenService.getIDCliente())
@@ -66,16 +68,19 @@ export class DashboardComponent implements OnInit {
             this.cliente = cliente;
             this.atualizarCliente = new AtualizarClienteFORM(cliente.telefone);
             this.processandoOperacao = false;
+            this.carregandoInformacoesPerfil = false;
           },
           (error: HttpErrorResponse) => {
             this.toasty.error(error);
             this.processandoOperacao = false;
+            this.carregandoInformacoesPerfil = false;
           });
     }
   }
 
   public atualizarPerfilCliente(): void {
     this.processandoOperacao = true;
+    this.carregandoInformacoesPerfil = true;
 
     this.clienteService.atualizarCliente(this.tokenService.getIDCliente(), this.atualizarCliente)
       .subscribe(
@@ -84,6 +89,7 @@ export class DashboardComponent implements OnInit {
           this.atualizarCliente = new AtualizarClienteFORM(cliente.telefone);
           this.toasty.success('Informações atualizadas com sucesso!');
           this.processandoOperacao = false;
+          this.carregandoInformacoesPerfil = false;
           this.indexTabViewPerfil = 0;
         },
         (error: HttpErrorResponse) => {
@@ -95,6 +101,7 @@ export class DashboardComponent implements OnInit {
           }
       
           this.processandoOperacao = false;
+          this.carregandoInformacoesPerfil = false;
         }
       );
   }
